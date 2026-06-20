@@ -1,0 +1,502 @@
+{
+  "tabs": {
+    "comprendre": "Comprendre",
+    "accueil": "Votes",
+    "verifier": "Vérifier"
+  },
+  "languages": {
+    "fr": "Français",
+    "en": "English"
+  },
+  "common": {
+    "cancel": "Annuler",
+    "retry": "Réessayer",
+    "analyze": "Lancer l'analyse",
+    "manualFill": "Remplir manuellement",
+    "open": "Ouvrir",
+    "select": "Sélectionner",
+    "backToHome": "Retour à l'écran d'accueil",
+    "close": "Fermer",
+    "backToScanner": "Retour au scanner",
+    "skip": "Passer",
+    "yes": "Oui",
+    "no": "Non",
+    "blank": "Blanc",
+    "continue": "Continuer"
+  },
+  "errorReport": {
+    "button": "Envoyer un rapport d'erreur",
+    "subject": "Rapport d'erreur",
+    "body": "Bonjour,\n\nL'application a rencontré une erreur inattendue. Le fichier joint contient des informations de diagnostic anonymisées qui aideront à corriger le problème.\n\nAucune donnée personnelle (numéro de passeport, nom, clé privée, etc.) n'est incluse dans ce rapport.\n\nMerci pour votre aide.\n\n— Application Referendum Libre, v{{version}} (build {{build}})",
+    "shareDialogTitle": "Envoyer le rapport",
+    "fallbackTitle": "Une erreur est survenue",
+    "fallbackMessage": "L'application a rencontré un problème inattendu. Vous pouvez envoyer un rapport pour nous aider à le corriger."
+  },
+  "navigation": {
+    "nfcTest": "Test NFC",
+    "nfcScan": "Lecture NFC",
+    "back": "Retour",
+    "votingProcess": "Processus de vote",
+    "oops": "Oups !"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "darkMode": "Mode sombre",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsAndConditions": "Conditions générales",
+    "contact": "Nous contacter",
+    "contactSubject": "Referendum Libre — {{platform}} · v{{version}}",
+    "contactBody": "Bonjour,\n\nÉcrivez ici…\n\n———\nApp : {{version}} (build {{build}})\nAppareil : {{device}} — {{platform}} {{os}}",
+    "nfcTest": "Test NFC",
+    "diagnostics": "Diagnostics",
+    "language": "Langue",
+    "version": "Version {{version}} ({{build}}) · GPLv3",
+    "network": "Réseau",
+    "networkMainnet": "Mainnet — chain 7368",
+    "networkTestnet": "Testnet — chain 7369",
+    "mainnetAlertTitle": "Activer le réseau Mainnet ?",
+    "mainnetAlertBody": "Mainnet enregistre votre identité et votre vote de manière permanente sur Rarimo Mainnet (chain 7368). À n'utiliser qu'en connaissance de cause.",
+    "extrasShowing": "Affichés : #{{ids}}",
+    "extrasEnabledEmpty": "Activé (liste vide)",
+    "extrasDisabled": "Désactivé"
+  },
+  "keyManagement": {
+    "title": "Gestion des clés",
+    "wipeAllConfirmTitle": "Tout supprimer ?",
+    "wipeAllConfirmBody": "Toute identité déjà enregistrée sur la blockchain avec ces clés ne pourra plus être utilisée depuis cette application — assurez-vous d'avoir exporté la base de documents si vous voulez la conserver.\n\nCette action est irréversible. Continuer ?",
+    "wipeAllDone": "Données effacées. Redémarrez l'application — vous devrez ré-accepter les CGU.",
+    "wipeAllCta": "Tout supprimer",
+    "wipeAllDescription": "L'application redémarrera comme une installation neuve : vous devrez ré-accepter les conditions générales et toute identité préalablement enregistrée sera perdue. Action irréversible.",
+    "dbDescription": "Chaque document scanné est associé à une clé BJJ distincte (clé unique par document). Sauvegardez la base avant de désinstaller l'application — sans elle, vos identités on-chain ne pourront plus être réutilisées.",
+    "dbRestoreHint": "Pour restaurer une sauvegarde, importez le fichier .json que vous avez exporté précédemment. Le choix « Fusionner » / « Tout remplacer » s'affiche au moment de l'import.",
+    "dbImportReplace": "Tous les documents actuellement enregistrés seront supprimés et remplacés par ceux du fichier.",
+    "dbImportMerge": "Les documents déjà présents seront conservés (jamais écrasés). Seuls les nouveaux documents seront ajoutés.",
+    "wipeDbConfirmBody": "Toutes les associations (document → clé BJJ) seront supprimées. Cela ne supprime pas la clé « active » actuelle. Faites une sauvegarde au préalable si nécessaire.",
+    "wipeDbDone": "Base de documents effacée.",
+    "wipeDbConfirmTitle": "Effacer la base de documents ?",
+    "dbSectionTitle": "Documents ({{count}})",
+    "exportShared": "Fichier de sauvegarde généré ({{count}} document{{plural}}).",
+    "exportShareTitle": "Sauvegarder les clés des documents",
+    "exportShareUnavailable": "Le partage de fichiers n'est pas disponible sur cet appareil.",
+    "exportError": "Échec de l'export.",
+    "importEmptyTitle": "Vide",
+    "importEmptyBody": "Le fichier sélectionné est vide.",
+    "importPickError": "Impossible de lire le fichier sélectionné.",
+    "importChooseModeTitle": "Importer la sauvegarde ?",
+    "importChooseModeBody": "Fusionner : conserve les documents existants et ajoute ceux qui ne sont pas déjà présents.\n\nTout remplacer : efface tous les documents actuels et les remplace par ceux du fichier.",
+    "importInvalidTitle": "Format invalide",
+    "importInvalidBody": "Impossible de lire la sauvegarde.",
+    "importDoneReplace": "Import (remplacement) : {{added}} ajouté{{addedPlural}}, {{skipped}} ignoré{{skippedPlural}}.",
+    "importDoneMerge": "Import (fusion) : {{added}} ajouté{{addedPlural}}, {{skipped}} ignoré{{skippedPlural}}.",
+    "actionExport": "Exporter (fichier .json)",
+    "actionSaveToPhone": "Enregistrer sur le téléphone",
+    "actionShare": "Partager…",
+    "exportSaved": "Fichier enregistré sur le téléphone ({{count}} document{{plural}}).",
+    "actionImportFile": "Importer un fichier…",
+    "actionDelete": "Effacer",
+    "actionMerge": "Fusionner",
+    "actionReplaceAll": "Remplacer tout",
+    "confirmReplaceTitle": "Remplacer la base ?",
+    "confirmMergeTitle": "Fusionner la base ?",
+    "wipeAllSectionTitle": "Tout supprimer",
+    "wipeAllSectionDescription": "⚠️ Efface la clé privée BJJ, la base de documents et l'acceptation des CGU. L'application redémarrera comme une installation neuve : vous devrez ré-accepter les CGU et rescanner votre document. Les identités déjà enregistrées on-chain avec les clés effacées ne pourront plus être utilisées depuis cette application — exportez la base de documents d'abord si vous voulez la conserver. Action irréversible.",
+    "wipeAllAlertBody": "Cette action va effacer :\n\n  • La clé privée BJJ actuelle\n  • Toutes les associations document → clé\n  • L'acceptation des CGU (vous devrez les ré-accepter au redémarrage)\n\nToute identité déjà enregistrée sur la blockchain avec ces clés ne pourra plus être utilisée depuis cette application — assurez-vous d'avoir exporté la base de documents si vous voulez la conserver.\n\nCette action est irréversible. Continuer ?",
+    "wipeAllError": "Erreur",
+    "wipeAllErrorBody": "Échec de l'effacement.",
+    "genericError": "Erreur"
+  },
+  "home": {
+    "yes": "Oui",
+    "blank": "Blanc",
+    "no": "Non",
+    "ongoingVotes": "Les votes en cours",
+    "referendumLearnMore": "En savoir plus",
+    "badgeOngoing": "Vote en cours",
+    "docTagPassport": "Passeport",
+    "docTagIdCard": "Carte d'identité",
+    "badgeSoon": "Bientôt",
+    "badgeFinished": "Terminé",
+    "votes": "Votes",
+    "countingInProgress": "Comptage en cours",
+    "endsIn": "Se termine le",
+    "starts": "Commence",
+    "ended": "Terminé",
+    "voteButton": "Voter",
+    "voteUnsupportedMultiQuestion": "Scrutin à choix multiples — non pris en charge",
+    "resultsNow": "Résultats à l'heure actuelle",
+    "loading": "Chargement des propositions...",
+    "error": "Erreur: {{message}}",
+    "noProposals": "Aucune proposition trouvée",
+    "preparingVotingData": "Préparation des données de vote… {{percent}}%",
+    "showLess": "Voir moins",
+    "showMore": "Voir plus ({{count}})",
+    "loadErrorNetwork": "Erreur réseau — vérifiez votre connexion et tirez vers le bas pour réessayer.",
+    "loadErrorGeneric": "Impossible de charger les propositions. Tirez vers le bas pour réessayer.",
+    "updateNoticeTitle": "Mise à jour recommandée",
+    "updateNoticeBody": "Votre version de l'application n'est plus à jour. Installez la version {{min}} ou plus récente depuis le store pour voter dans de bonnes conditions."
+  },
+  "voting": {
+    "title": "Processus de vote",
+    "step1Description": "Validez votre âge et votre nationalité. Vos données sont chiffrées et non traçables. Vous êtes 100% anonyme.",
+    "step1Privacy": "Votre identité ne sera pas conservée : vos données personnelles sont impossibles à retracer, et sont effacées immédiatement après le vote.",
+    "step2Title": "Vérifiez votre âge et nationalité localement sur votre appareil",
+    "step3Title": "Vote anonyme",
+    "step3Description": "Une fois vos données vérifiées comme authentiques, l'application produit un jeton anonyme vous permettant de voter.",
+    "step4Start": "Démarrer l'analyse",
+    "step5CameraPermission": "Permission requise pour accéder à la caméra",
+    "step5CameraUnavailable": "Caméra non disponible",
+    "step5CardOverlay": "CARTE D'IDENTITÉ",
+    "step5CardOverlay_idCard": "CARTE D'IDENTITÉ",
+    "step5CardOverlay_passport": "PASSEPORT",
+    "step5Scanning": "Recherche du MRZ...",
+    "step5Partial": "MRZ partiellement détecté...",
+    "step5Success": "MRZ détecté !",
+    "step5Underage": "Vous devez avoir au moins 18 ans pour voter.",
+    "step5WrongCountry": "Ce scrutin n'est pas ouvert à votre nationalité ({{country}}).",
+    "step5OcrUnavailable": "La reconnaissance de texte ne semble pas fonctionner sur cet appareil (services Google absents). Utilisez « Saisie manuelle » ci-dessous.",
+    "step6MissingMrz": "Données MRZ manquantes. Scannez d'abord le MRZ.",
+    "step6Init": "🔄 Initialisation...",
+    "step6Authenticating": "🔐 Authentification...",
+    "step6Reading": "📖 Lecture des données...",
+    "step6ActiveAuth": "✅ Authentification active...",
+    "step6ReadSuccess": "✅ Lecture réussie !",
+    "step6ReadError": "❌ Erreur de lecture",
+    "step6InvalidMrz": "❌ Données MRZ invalides. Retour au scanner...",
+    "step6ErrorWithMessage": "❌ Erreur: {{message}}. Réessayez.",
+    "step6TagLostError": "❌ Le contact avec votre document a été perdu. Gardez la puce bien collée contre le dos du téléphone pendant toute la durée de la lecture (~10 s), sans bouger.",
+    "step6KeepClose_idCard": "📌 Gardez votre carte d'identité bien collée contre le téléphone, sans bouger.",
+    "step6KeepClose_passport": "📌 Gardez votre passeport bien collé contre le téléphone, sans bouger.",
+    "step6Scanning": "Scan en cours...",
+    "step6NfcDisabledTitle": "NFC désactivé",
+    "step6NfcDisabledMessage": "Activez le NFC dans les réglages de votre téléphone, puis revenez à l'application — le scan reprendra automatiquement.",
+    "step6OpenNfcSettings": "Ouvrir les réglages NFC",
+    "step7Title": "Vérification locale",
+    "step7Description": "Vérification de votre âge et nationalité localement sur votre appareil. Veuillez patienter…",
+    "step7Verifying": "Vérification en cours...",
+    "step7CheckingStatus": "Vérification du statut...",
+    "step7Registering": "Enregistrement de votre identité...",
+    "step7Confirming": "Confirmation sur la blockchain...",
+    "step7Verified": "Vérification réussie !",
+    "step7MissingData": "Données d'identité manquantes. Veuillez rescanner votre carte.",
+    "step7WrongDocumentType": "Passeport détecté. Veuillez utiliser votre carte nationale d'identité (pas un passeport) pour voter.",
+    "step7NameUnavailable": "Nom non disponible",
+    "step7BornOn": "Né(e) le: {{date}}",
+    "step7Nationality": "Nationalité: {{value}}",
+    "step8Ready": "Vous êtes prêt",
+    "step8VoteNow": "Votez maintenant",
+    "step9Confirm": "Vous êtes sûr de vouloir voter: {{vote}} ?",
+    "step9VoteAction": "Voter {{vote}}",
+    "step9ErrorTitle": "Cet identifiant ne peut pas être utilisé",
+    "step10Confirm": "Vous êtes sûr de vouloir voter: {{vote}} ?",
+    "step10VoteAction": "Voter {{vote}}",
+    "step10VoteYes": "Voter Oui",
+    "step10VoteNo": "Voter Non",
+    "step10VoteBlank": "Voter Blanc",
+    "step11Status": "{{countdown}} ({{status}})",
+    "step11Success": "Succès",
+    "step11Fail": "Échec",
+    "step12SuccessTitle": "Votre vote a bien été validé.",
+    "step12SuccessDescription": "Les données de votre passeport ont été effacées de cet appareil.",
+    "step12SuccessButton": "Voir les résultats",
+    "step12VoteIdLabel": "Voici le numéro de série de votre vote :",
+    "step12VoteIdCopy": "Copier",
+    "step12VoteIdCopied": "Copié !",
+    "step12VoteIdKeep": "Vous pouvez le noter quelque part. Rendez-vous dans l'onglet \"Vérifier\", tapez le numéro de série d'un vote (personne sauf vous ne sait que c'est le vôtre) et vous pourrez vous assurer que le vote existe et qu'il correspond bien à ce que vous avez choisi.",
+    "step12Share": "Partager",
+    "step12ShareMessage": "Je viens de voter sur Referendum Libre ! Mon numéro de série de vote : {{voteId}}",
+    "step11VoteSubmitted": "Vote soumis !",
+    "step11Confirming": "Confirmation de l'enregistrement…",
+    "voteNotRegistered": "Votre vote n'a pas pu être enregistré sur la blockchain. La transaction a échoué. Veuillez réessayer.",
+    "step12PendingTitle": "Vote soumis, confirmation en attente.",
+    "step12PendingDescription": "Votre vote a été transmis mais n'est pas encore confirmé sur la blockchain. Vérifiez son enregistrement dans l'onglet « Vérifier » avec votre numéro de série.",
+    "step11Preparing": "Préparation...",
+    "step11GeneratingProof": "Génération de la preuve ZK...",
+    "step11NetworkRetry": "Erreur réseau — nouvelle tentative ({{attempt}}/{{max}})...",
+    "step11DownloadingData": "Téléchargement des données de vote... {{percent}}%",
+    "step11FinalizingData": "Finalisation des données de vote...",
+    "step11DownloadFailed": "Impossible de télécharger les données de vote. Vérifiez votre connexion et réessayez.",
+    "step11VotingNotStarted": "Le vote n'a pas encore commencé.",
+    "step11VotingEnded": "Le vote est terminé.",
+    "step11ProverIncompatible": "La preuve Android est rejetée par le contrat (PAIRING_FAILED 0xd71fd263). Problème connu côté SDK Rarime Android. Merci de signaler l'incident.",
+    "step12ErrorTitle": "Une erreur est survenue.",
+    "step12ErrorDescription": "Veuillez recommencer.",
+    "step6PassportDetected": "📄 Passeport détecté",
+    "step6UseIdCardInstead": "Cette étape nécessite votre carte d'identité. Veuillez approcher votre carte du téléphone.",
+    "step6IdCardDetected": "🪪 Carte d'identité détectée",
+    "step6UsePassportInstead": "Cette étape nécessite votre passeport. Veuillez approcher votre passeport du téléphone.",
+    "step6RestartWithCorrectDoc": "Recommencer avec le bon document",
+    "step2Description_idCard": "Cette application vérifie les données sur la puce NFC à l'intérieur de votre Carte d'identité. Les données ne sont pas transférées ni conservées sur un serveur tiers.",
+    "step2Description_passport": "Cette application vérifie les données sur la puce NFC à l'intérieur de votre Passeport. Les données ne sont pas transférées ni conservées sur un serveur tiers.",
+    "step4Title_idCard": "Analyse de la Carte d'Identité",
+    "step4Title_passport": "Analyse du Passeport",
+    "step4Description_idCard": "Maintenez votre appareil sur votre Carte d'identité",
+    "step4Description_passport": "Maintenez votre appareil sur votre Passeport",
+    "step5Title_idCard": "Présentez le verso de votre carte devant votre caméra",
+    "step5Title_passport": "Présentez la page photo de votre passeport devant votre caméra",
+    "step5Positioning_idCard": "Positionnez le dos de la carte",
+    "step5Positioning_passport": "Positionnez le page photo du passeport",
+    "step5PassportDetected_idCard": "Mauvais document — veuillez scanner une carte d'identité française, pas un passeport.",
+    "step5PassportDetected_passport": "Mauvais document — veuillez scanner un passeport français, pas une carte d'identité.",
+    "step5Expired_idCard": "Cette carte d'identité est expirée.",
+    "step5Expired_passport": "Cette passeport est expirée.",
+    "step6Title_idCard": "Lecture de la puce de votre carte",
+    "step6Title_passport": "Lecture de la puce de votre passeport",
+    "step6PresentCard_idCard": "📱 Approchez votre carte d'identité du téléphone",
+    "step6PresentCard_passport": "📱 Approchez votre passeport du téléphone",
+    "step6Now_idCard": "📱 Approchez votre carte maintenant...",
+    "step6Now_passport": "📱 Approchez votre passeport maintenant...",
+    "step6Instruction_idCard": "Collez la puce de votre carte d'identité contre l'arrière de votre téléphone, ne bougez plus et appuyez sur Analyse. Gardez la puce de votre carte collée contre votre téléphone pendant l'analyse.",
+    "step6Instruction_passport": "Collez la puce de votre passeport contre l'arrière de votre téléphone, ne bougez plus et appuyez sur Analyse. Gardez la puce de votre passeport collée contre votre téléphone pendant l'analyse.",
+    "step9ErrorDescription_idCard": "Le propriétaire de cette carte d'identité a déjà voté ou nous a informé qu'il refuse de voter",
+    "step9ErrorDescription_passport": "Le propriétaire de ce passeport a déjà voté ou nous a informé qu'il refuse de voter",
+    "step11MissingData_idCard": "Erreur : scannez d'abord votre carte d'identité.",
+    "step11MissingData_passport": "Erreur : scannez d'abord votre passeport.",
+    "step1Title": "Validez le caractère unique de votre vote (et que vous n'êtes pas un robot)",
+    "errors": {
+      "curveUnsupported": "Ce passeport utilise une courbe cryptographique pas encore prise en charge par l'application ({{detail}}). Notre équipe travaille à ajouter cette compatibilité.",
+      "compressedPubKey": "Ce passeport utilise une clé publique compressée ({{bits}}-bit Y {{parity}}) que le contrat d'enregistrement on-chain ne supporte pas encore. Notre équipe travaille à ajouter cette compatibilité.",
+      "unexpectedCertEncoding": "Le certificat de votre passeport utilise un encodage inattendu (SPKI : {{spkiLen}} octets, tête=0x{{spkiHead}}, courbe {{curveBits}} bits). Merci de partager le JSON du passeport pour diagnostic.",
+      "dispatcherNotDeployed": "Votre type de passeport n'est pas encore pris en charge par le contrat d'enregistrement Rarimo (autorité de certification ECDSA en attente de déploiement on-chain). Notre équipe suit ce blocage avec Rarimo.",
+      "passportAlreadyBoundOtherKey": "Ce passeport est déjà enregistré sur Mainnet avec une autre clé privée. Pour voter avec ce passeport, restaurez la clé d'origine via Paramètres → Gestion des clés → Restaurer une clé.",
+      "cscaNotInBundle": "Le certificat racine (CSCA) de votre passeport n'est pas dans la liste ICAO embarquée dans l'application. Demandez à la maintenance de mettre à jour la liste des certificats.",
+      "missingAki": "Votre certificat de passeport n'a pas d'AuthorityKeyIdentifier — impossible de déterminer le CSCA signataire.",
+      "cscaNotRegisteredOnMainnet": "Le certificat racine de votre passeport n'est pas encore enregistré sur Mainnet. Réessayez plus tard ou contactez le support.",
+      "registrationServiceUnavailable": "Le service d'enregistrement est temporairement indisponible. Votre vote n'a pas encore été enregistré. Réessayez plus tard.",
+      "votingServiceUnavailable": "Le service de vote est temporairement indisponible. Votre vote n'a pas été enregistré. Réessayez plus tard.",
+      "deviceStorageFull": "Espace de stockage insuffisant sur votre appareil. Le vote nécessite le téléchargement d'environ 1 Go de données cryptographiques. Libérez de l'espace puis réessayez.",
+      "switchToMainnet": "Changez de réseau dans Paramètres → Réseau.",
+      "network": "Erreur réseau — vérifiez votre connexion et réessayez.",
+      "alreadyRegistered": "Identité déjà enregistrée.",
+      "alreadyVoted": "Vous avez déjà voté pour cette proposition.",
+      "forbidden": "Accès refusé par le serveur. Réessayez plus tard.",
+      "verificationFailed": "La vérification a échoué. Veuillez rescanner votre carte et réessayer.",
+      "generic": "Une erreur est survenue. Veuillez réessayer.",
+      "unexpected": "Une erreur inattendue est survenue. Veuillez réessayer.",
+      "parityEven": "paire",
+      "parityOdd": "impaire"
+    }
+  },
+  "verifier": {
+    "title": "Vérifier",
+    "description": "Chaque vote est enregistré sur la blockchain et vérifiable publiquement. Aucun serveur central ne peut modifier les résultats.",
+    "lookupLabel": "Rechercher un vote par numéro de série",
+    "cta": "Vérifier",
+    "notFound": "Numéro de série introuvable. Vérifiez et réessayez.",
+    "lookupError": "Erreur lors de la vérification. Réessayez.",
+    "voteVerified": "Vote vérifié",
+    "voteVerifiedAnswer": "Ce vote a choisi : {{vote}}",
+    "recordedOn": "Enregistré le {{date}}",
+    "voteFailed": "Vote non enregistré",
+    "voteFailedDescription": "Cette transaction a échoué : votre vote n'a pas été pris en compte. Vous pouvez réessayer de voter.",
+    "votePending": "Transaction pas encore confirmée",
+    "votePendingDescription": "Cette transaction n'est pas encore confirmée sur la blockchain. Réessayez dans quelques instants.",
+    "votesCount": "Votes enregistrés",
+    "optionsCount": "Options",
+    "viewTxOnChain": "Voir la transaction sur la blockchain"
+  },
+  "nfcScan": {
+    "title": "Lecture NFC",
+    "missingMrz": "Données MRZ manquantes",
+    "instruction": "Placez votre passeport contre l'arrière de votre téléphone"
+  },
+  "mrzManual": {
+    "title": "Saisie manuelle MRZ",
+    "documentNumber": "Numéro de document",
+    "birthDate": "Date de naissance",
+    "expiryDate": "Date d'expiration",
+    "documentPlaceholder": "Ex: AB123456",
+    "datePlaceholder": "JJ/MM/AA",
+    "birthHint": "Format : Jour / Mois / Année (ex : 15/07/90 pour le 15 juillet 1990)",
+    "expiryHint": "Format : Jour / Mois / Année (ex : 25/12/29 pour le 25 décembre 2029)",
+    "birthInvalid": "Date de naissance invalide.",
+    "birthUnderage": "Vous devez avoir au moins 18 ans pour voter.",
+    "expiryInvalid": "Date d'expiration invalide.",
+    "expiryExpired": "Ce passeport est expiré.",
+    "submit": "Valider",
+    "idCardOnly": "Seuls les passeports français sont acceptés. Les cartes d'identité ne sont pas prises en charge."
+  },
+  "nfcTest": {
+    "closeCamera": "✕ Fermer",
+    "scanMrzInstructions": "Scannez les 3 lignes MRZ au dos de la carte d'identité",
+    "rarimeTestnet": "Rarime Testnet",
+    "profileKey": "Profile Key:",
+    "loading": "Chargement...",
+    "notRegistered": "⚪ Non enregistré",
+    "registeredOwnKey": "✅ Enregistré (votre clé)",
+    "registeredOtherKey": "⚠️ Enregistré (autre clé)",
+    "checkingStatus": "Vérification du statut sur le testnet...",
+    "registering": "Enregistrement (~5s)...",
+    "registerIdentity": "Enregistrer l'identité sur le testnet",
+    "txHash": "TX Hash:",
+    "resetPrivateKey": "🔄 Réinitialiser la clé privée",
+    "mrzData": "Données MRZ (au dos du passeport)",
+    "scanWithCamera": "📷 Scanner avec caméra",
+    "orManualInput": "ou saisir manuellement :",
+    "documentNumberPlaceholder": "Numéro de document (ex: 12AB34567)",
+    "birthDatePlaceholder": "Date de naissance (AAMMJJ)",
+    "expiryDatePlaceholder": "Date d'expiration (AAMMJJ)",
+    "fullPassportRead": "Lecture complète du passeport :",
+    "scanInProgress": "Scan en cours...",
+    "edocumentModule": "📄 EDocument Module",
+    "basicNfcTests": "Tests NFC basiques :",
+    "scanNdefTag": "Scanner Tag NDEF",
+    "scanIsoDepPassport": "Scanner IsoDep (Passeport)",
+    "errorLabel": "Erreur :",
+    "passportScannedSuccess": "✅ Passeport scanné avec succès",
+    "lastName": "Nom :",
+    "firstName": "Prénom :",
+    "birthDate": "Date de naissance :",
+    "nationality": "Nationalité :",
+    "documentNumber": "N° Document :",
+    "expiryDate": "Date d'expiration :",
+    "passportDataInLogs": "Données du passeport disponibles dans les logs",
+    "viewRawData": "📋 Voir données brutes (logs)",
+    "instruction": "Appuyez sur le bouton et approchez un tag NFC de votre appareil.",
+    "errors": {
+      "cameraPermissionDenied": "Permission caméra refusée",
+      "missingPassportOrKey": "Aucun passeport scanné ou clé privée indisponible",
+      "registrationFailed": "Échec d'enregistrement : {{message}}",
+      "unknown": "Erreur inconnue",
+      "fillAllMrzFields": "Veuillez remplir tous les champs MRZ"
+    },
+    "status": {
+      "presentPassport": "📱 Approchez votre passeport du téléphone",
+      "authenticatingPassport": "🔐 Authentification avec le passeport...",
+      "readingPassportData": "📖 Lecture des données du passeport...",
+      "scanCompleted": "✅ Scan terminé avec succès !"
+    }
+  },
+  "notFound": {
+    "title": "Cet écran n'existe pas.",
+    "goHome": "Retour à l'accueil"
+  },
+  "comprendre": {
+    "welcome": {
+      "title": "Bienvenue !",
+      "text": "Nous développons une application libre qui permet aux citoyens français d'exprimer collectivement leur volonté politique par des référendums vérifiables. Lorsqu'un grand nombre de citoyens participent à un vote authentifié, son résultat devient une expression démocratique forte, publiquement vérifiable, et politiquement difficile à ignorer."
+    },
+    "sections": [
+      {
+        "title": "L'objectif",
+        "intro": "",
+        "accordions": [
+          {
+            "title": "En quoi c'est différent d'un sondage ?",
+            "content": "Un sondage interroge un petit échantillon de personnes pour estimer une opinion. Ces référendums vérifiés permettent à chaque citoyen de voter réellement, une seule fois, de façon anonyme et vérifiable. Un sondage donne une estimation. Un référendum donne un résultat réel, contrôlable par tous et politiquement difficile à ignorer."
+          },
+          {
+            "title": "En quoi c'est différent d'une pétition ?",
+            "content": "Une pétition exprime un soutien déclaratif sans garantir que chaque signataire est un citoyen français majeur ni qu'une même personne ne signe qu'une seule fois, et elle repose sur une liste contrôlée par ses organisateurs, qui en fixent la formulation et publient eux-mêmes le résultat. À l'inverse, ce référendum vérifié repose sur une authentification par pièce d'identité garantissant 1 personne = 1 vote, permet de voter pour, contre ou blanc, et rend le résultat contrôlable par tous grâce à un registre public vérifiable indépendamment de ses organisateurs. Là où une pétition mesure une mobilisation dirigée autour d'une position, ce dispositif permet l'expression neutre et vérifiable d'une décision collective authentifiée de citoyens, ce qui lui donne une portée démocratique et politique d'une nature entièrement différente."
+          },
+          {
+            "title": "Est-ce un référendum officiel ?",
+            "content": "Non. C'est un référendum vérifié. Chaque votant peut vérifier la prise en compte de son vote sur le registre en ligne public. Mais un référendum auquel participent des centaines de milliers ou des millions de citoyens authentifiés devient un fait démocratique majeur."
+          }
+        ]
+      },
+      {
+        "title": "Un vote unique et vérifiable par tous",
+        "intro": "Le droit de vote est vérifié par lecture de la puce de votre pièce d'identité directement sur votre téléphone. Cette vérification permet de garantir :\n1. que vous êtes français et majeur\n2. qu'une même personne ne peut voter qu'une seule fois\n\nCette vérification est réalisée localement sur votre téléphone : aucun fichier central d'identité n'est créé.",
+        "accordions": [
+          {
+            "title": "De quoi ai-je besoin pour voter ?",
+            "content": "Vous avez besoin d'un passeport en cours de validité, et d'un smartphone avec l'application Referendum Libre installée."
+          },
+          {
+            "title": "Pourquoi pas la carte d'identité ?",
+            "content": "C'est un choix technique, pragmatique et provisoire. La technologie de vote ne fonctionne pas avec une liste électorale centrale. Elle repose sur un document d'identité permettant de garantir qu'une personne ne vote qu'une seule fois, tout en restant anonyme. Or il n'est pas possible, aujourd'hui, de permettre simultanément le vote par passeport ET par carte d'identité sans prendre le risque de doubles votes pour une même personne. Il fallait donc choisir une base unique pour démarrer. Nous avons choisi le passeport biométrique parce qu'il existe aujourd'hui beaucoup plus de passeports compatibles que de cartes d'identité biométriques réellement exploitables. Les passeports biométriques français existent depuis de nombreuses années et circulent massivement. Les nouvelles cartes d'identité biométriques, elles, sont beaucoup plus récentes et beaucoup moins répandues."
+          },
+          {
+            "title": "Pourquoi ne pas utiliser FranceConnect ?",
+            "content": "Parce que FranceConnect repose sur un fichier central d'identité. Notre système repose au contraire sur une vérification locale de la pièce d'identité sans base centrale reliant identité et vote. FranceConnect est géré par l'État, notre système est indépendant du gouvernement."
+          },
+          {
+            "title": "Peut-on voter deux fois avec deux téléphones ?",
+            "content": "Non. La preuve d'identité empêche la duplication du droit de vote."
+          },
+          {
+            "title": "Existe-t-il une possibilité de double vote ?",
+            "content": "Le système empêche une personne de voter deux fois avec la même pièce d'identité.\n\nDans l'état actuel du déploiement des nouvelles pièces d'identité électroniques, une personne déclarant sa carte ou son passeport perdus et obtenant une nouvelle pièce d'identité pourrait théoriquement voter deux fois. Ce cas reste extrêmement rare aujourd'hui. À terme, nous pouvons faire en sorte que ce risque disparaisse techniquement : lorsque les pièces d'identité perdues et renouvelées partageront un identifiant commun empêchant toute double utilisation."
+          },
+          {
+            "title": "Pour aller plus loin",
+            "content": "Le code source de l'application est disponible sous licence GPLv3 https://github.com/referendum-libre/referendum-libre-react-native Le système de vote avec l'urne électronique est disponible sur https://github.com/rarimo/\n\nLe projet de Rarimo avec des votes existants : https://freedomtool.org/"
+          }
+        ]
+      },
+      {
+        "title": "Un vote garanti anonyme",
+        "intro": "On prouve que vous avez le droit de voter, pas qui vous êtes. Votre identité est vérifiée uniquement pour confirmer que vous avez le droit de voter. Ensuite, votre identité est séparée de votre vote avant son envoi. Le vote envoyé dans le registre infalsifiable et visible par tous ne contient aucune information permettant de relier votre identité à votre vote. Par conséquent, le bulletin de vote comptabilisé ne peut pas remonter jusqu'à une pièce d'identité.\n\nEn termes techniques, le vote se fait dans le cadre d'un smart contract sur une chaîne (de Rarimo pour commencer).",
+        "accordions": [
+          {
+            "title": "Comment garantir « 1 personne = 1 vote » sans connaître l'identité ?",
+            "content": "La pièce d'identité est lue directement sur le téléphone afin de vérifier que la personne est française, majeure et qu'elle n'utilise son droit de vote qu'une seule fois. Un jeton cryptographique prouvant le droit de voter est ensuite généré. Cette preuve confirme que la personne a le droit de voter sans révéler son identité. Aucun fichier central ne relie l'identité au vote. Le système vous permet de voter mais ne sait pas qui vous êtes."
+          },
+          {
+            "title": "Qui peut voir mon vote ?",
+            "content": "Personne. Votre vote est anonymisé avant d'être envoyé."
+          },
+          {
+            "title": "L'État peut-il savoir ce que j'ai voté ?",
+            "content": "Non. Aucun fichier central ne relie identité et vote. Si une pièce d'identité est utilisée après votre vote, le système détecte qu'elle a déjà servi et empêche tout second vote. Parmi les options lorsque vous réalisez un vote, une option « je refuse de voter » existe pour signaler publiquement qu'aucun vote n'a été exprimé avec votre pièce d'identité. Cela vous protège."
+          }
+        ]
+      },
+      {
+        "title": "Un vote transparent",
+        "intro": "Chaque vote reçoit un identifiant unique visible publiquement dans le registre du scrutin. Cela permet :\n– à chaque citoyen de vérifier que son vote est bien compté et qu'il correspond à son choix\n– à tous de vérifier le nombre total de votes",
+        "accordions": [
+          {
+            "title": "Puis-je vérifier que mon vote est bien compté ?",
+            "content": "Oui. Votre vote possède un identifiant unique visible par tous dans le registre. Cet identifiant permet à chaque citoyen de vérifier que son vote est bien enregistré et qu'il est bien pris en compte dans le total. Le contrôle du résultat est possible par tous."
+          },
+          {
+            "title": "Puis-je vérifier les votes des autres ?",
+            "content": "Oui. Le nombre total de votes est public et vérifiable. Les résultats sont visibles dans leur progression en direct."
+          }
+        ]
+      },
+      {
+        "title": "Les autres peuvent voter sur votre téléphone",
+        "intro": "Plusieurs personnes peuvent voter depuis un même téléphone. Chaque vote nécessite la lecture d'une pièce d'identité différente. Une fois le vote enregistré, aucune information n'est conservée sur le téléphone.",
+        "accordions": [
+          {
+            "title": "Le propriétaire du téléphone peut-il voir mon vote ?",
+            "content": "Non. Le vote est effacé du téléphone après envoi. Le téléphone fonctionne comme un bureau de vote, pas comme un bulletin de vote."
+          },
+          {
+            "title": "Peut-on voter pour quelqu'un d'autre ?",
+            "content": "Non. La pièce d'identité est nécessaire. Utiliser une pièce d'identité de quelqu'un d'autre est une usurpation d'identité et c'est pénalement répréhensible."
+          }
+        ]
+      },
+      {
+        "title": "Un registre de votes distribué entre des ordinateurs et vérifiable publiquement",
+        "intro": "Les votes ne sont pas stockés dans un serveur unique. Ils sont enregistrés dans un registre distribué entre de nombreux d'ordinateurs et public. Cela signifie qu'aucun acteur unique ne peut modifier ou supprimer les résultats sans que cela soit visible. Le système repose sur la vérification publique des résultats plutôt que sur la confiance dans une autorité centrale.",
+        "accordions": [
+          {
+            "title": "Un tiers peut-il faire fermer l'application ?",
+            "content": "Même si l'application disparaît, les votes restent enregistrés dans le fichier ouvert à tous, distribué et accessible indépendamment de l'application. On ne peut pas interrompre le scrutin durant la durée du vote."
+          },
+          {
+            "title": "Un tiers peut-il supprimer les résultats ?",
+            "content": "Non. Ils sont stockés dans une urne électronique accessible à tous."
+          },
+          {
+            "title": "Peut-on truquer les résultats ?",
+            "content": "Le système n'est pas basé sur la confiance dans un serveur central, mais sur la vérification publique des résultats. Le droit de vote est vérifié localement sur le téléphone, le vote est anonymisé avant son envoi, puis enregistré dans un registre public consultable par tous. Toute tentative de modification du résultat serait immédiatement visible, car chacun peut vérifier le nombre de votes enregistrés."
+          },
+          {
+            "title": "Que se passe-t-il si une faille est découverte ?",
+            "content": "Le système repose sur la transparence plutôt que sur le secret. Le code est open source, ce qui permet à des experts indépendants de l'examiner à tout moment. Si une faille est identifiée, elle peut être corrigée par l'équipe derrière l'app, publiquement et rapidement. Cette logique d'audit permanent renforce la sécurité du système au lieu de l'affaiblir. Si vous trouvez une faille vous-même, annoncez la sur https://github.com/referendum-libre/referendum-libre-react-native"
+          }
+        ]
+      }
+    ]
+  },
+  "placeholderSteps": {
+    "title": "Étape {{step}}",
+    "content": "Contenu de l'étape {{step}}",
+    "continue": "Continuer"
+  }
+}
