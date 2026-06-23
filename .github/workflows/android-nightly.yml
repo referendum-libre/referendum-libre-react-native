@@ -71,6 +71,12 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties', 'package-lock.json') }}
           restore-keys: gradle-${{ runner.os }}-
 
+      - name: Free disk space
+        # ubuntu-latest's ~14 GB root disk overflows during
+        # mergeDebugNativeLibs (the big native-.so merge) + D8 dex-merge.
+        # Drop ~30 GB of unused preinstalled toolchains first.
+        run: bash scripts/ci/free-disk-space.sh
+
       - name: Install JS dependencies
         run: npm ci
         # postinstall runs patch-package automatically.
