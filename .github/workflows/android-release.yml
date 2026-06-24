@@ -278,7 +278,17 @@ jobs:
         # libVisionCamera, etc.) to a single ABI. Cuts native-compile work
         # ~4x vs the default arm64+armv7+x86+x86_64 fan-out — the dominant
         # cost on a 2-core hosted runner.
-        run: ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a --no-daemon --stacktrace
+        #
+        # `-x lintVitalRelease` skips AGP's automatic release-lint pass.
+        # assembleRelease otherwise fans out a `lintVitalAnalyzeRelease`
+        # worker JVM per module *concurrently* with the node Metro bundle
+        # (createBundleReleaseJsAndAssets) on top of the 6 GB build JVM —
+        # that overlap exhausted RAM on the hosted runner, sending it into
+        # swap-thrash until it lost its heartbeat ("The hosted runner lost
+        # communication with the server"). Lint isn't a release gate here:
+        # PR validation already runs ESLint, and nothing consumes the AGP
+        # lint report. Dropping it removes the memory spike and is faster.
+        run: ./gradlew assembleRelease -PreactNativeArchitectures=arm64-v8a -x lintVitalRelease --no-daemon --stacktrace
 
       - name: Locate APK
         id: apk
