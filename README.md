@@ -92,6 +92,11 @@ npm test
 - [react-native-nfc-manager](https://github.com/revtel/react-native-nfc-manager) - NFC access
 - [@rarimo/rarime-rn-sdk](https://github.com/rarimo/rarime-rn-sdk) - Zero-knowledge identity
 
+## Community
+
+Join us on Matrix to discuss development, ask questions, and help shape the project:
+[**#referendum-libre:matrix.org**](https://matrix.to/#/#referendum-libre:matrix.org).
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
