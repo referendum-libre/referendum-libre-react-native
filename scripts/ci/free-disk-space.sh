@@ -3,7 +3,7 @@
 # Reclaim disk space on GitHub-hosted ubuntu-latest runners before the
 # Android build.
 #
-# Why this exists: the nightly was failing at
+# Why this exists: the scheduled debug build was failing at
 # `:react-native-reanimated:mergeDebugNativeLibs` with
 # `System.IO.IOException: No space left on device`. mergeDebugNativeLibs
 # is the disk-heaviest Gradle task — it copies and merges every native

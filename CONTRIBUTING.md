@@ -61,7 +61,7 @@ npm run lint
 We use a two-branch GitFlow-lite:
 
 - **`develop`** — integration branch. All feature work, bug fixes, refactors,
-  and docs go here. The nightly Android build (debug-signed APK) runs off
+  and docs go here. The weekly Android build (debug-signed APK) runs off
   this branch.
 - **`master`** — release branch. Updated only by maintainers, who merge
   `develop` into `master` when a cut is ready. Signed-release APKs are
@@ -72,7 +72,7 @@ We use a two-branch GitFlow-lite:
                  ├──► develop ──(maintainer merge)──► master ──(tag v1.4)──► signed APK
    fix/bar ─────┘                  │                              │
                                    ▼                              ▼
-                          nightly debug APK             GitHub Release w/ SHA-256
+                          weekly debug APK              GitHub Release w/ SHA-256
 ```
 
 ### Branch Naming

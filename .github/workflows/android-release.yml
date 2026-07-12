@@ -16,8 +16,8 @@ name: Android Release (signed APK)
 # (libnoir_java.so, RmoCalcs.aar, jniLibs/witnesscalc_*) only ship
 # arm64-v8a, so the other three ABIs (armeabi-v7a, x86, x86_64) would
 # only have an RN/Expo runtime that crashes the moment any Rarimo code
-# runs. The nightly debug build keeps all four ABIs for emulator
-# dogfooding (see android-nightly.yml). See CLAUDE.md ▸ "Android
+# runs. The weekly debug build keeps all four ABIs for emulator
+# dogfooding (see android-weekly.yml). See CLAUDE.md ▸ "Android
 # device compatibility".
 #
 # -----------------------------------------------------------------------
@@ -205,10 +205,10 @@ jobs:
           cmdline-tools-version: latest
 
       - name: Free disk space
-        # Same precaution as the nightly: drop ~30 GB of unused preinstalled
+        # Same precaution as the weekly build: drop ~30 GB of unused preinstalled
         # toolchains so the native-.so merge + D8 dex-merge don't run the
         # runner's root disk out of space. This job only builds arm64-v8a, so
-        # its merge is lighter than the nightly's four-ABI debug build, but the
+        # its merge is lighter than the weekly four-ABI debug build, but the
         # headroom is cheap insurance for the signed release path.
         run: bash scripts/ci/free-disk-space.sh
 
