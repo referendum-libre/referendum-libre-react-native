@@ -72,7 +72,7 @@ const SUPPORTED_VERSION = 1;
 // online.
 const BUNDLED_FALLBACK: ProposalIndex = {
   version: SUPPORTED_VERSION,
-  mainnet: { active: ['50'], devOnly: ['38', '47', '49'] },
+  mainnet: { active: ['57'], devOnly: ['50','38', '47', '49'] },
   testnet: { active: [], devOnly: [] },
 };
 
