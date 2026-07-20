@@ -8,15 +8,8 @@ jest.mock('lottie-react-native', () => {
   const { View } = require('react-native');
   return { __esModule: true, default: View };
 });
-jest.mock('react-native-mmkv', () => ({
-  MMKV: class {
-    getString() { return undefined; }
-    getBoolean() { return undefined; }
-    set() {}
-    delete() {}
-  },
-}));
 
+import '@/locales';
 import Step8 from './Step8';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 
@@ -27,25 +20,25 @@ import { ThemeProvider } from '@/contexts/ThemeContext';
 // Whatever the (still unidentified) jump path is, this guard makes it
 // harmless: an unverified user cannot advance past Step 8.
 describe('Step8 vote-now guard', () => {
-  const press = (ui: React.ReactElement) => {
+  // ThemeProvider renders null until it has loaded the theme from
+  // AsyncStorage, so the button only appears after that async resolves.
+  const press = async (ui: React.ReactElement) => {
     const r = render(<ThemeProvider>{ui}</ThemeProvider>);
-    // i18n fr: "Votez maintenant"; fall back to the raw key if i18n isn't
-    // initialised in the jest environment.
-    fireEvent.press(r.getByText(/Votez maintenant|step8VoteNow/));
+    fireEvent.press(await r.findByText('Votez maintenant'));
     return r;
   };
 
-  it('fires onVoteSuccess when verification succeeded', () => {
+  it('fires onVoteSuccess when verification succeeded', async () => {
     const onVoteSuccess = jest.fn();
-    press(<Step8 containerWidth={300} verificationResult="success" onVoteSuccess={onVoteSuccess} />);
+    await press(<Step8 containerWidth={300} verificationResult="success" onVoteSuccess={onVoteSuccess} />);
     expect(onVoteSuccess).toHaveBeenCalledTimes(1);
   });
 
   it.each([null, undefined, 'error'] as const)(
     'does NOT fire onVoteSuccess when verificationResult is %s',
-    (vr) => {
+    async (vr) => {
       const onVoteSuccess = jest.fn();
-      press(
+      await press(
         <Step8
           containerWidth={300}
           verificationResult={vr as any}

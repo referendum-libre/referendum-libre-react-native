@@ -1,15 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { MMKV } from 'react-native-mmkv';
 import { useColorScheme } from 'react-native';
-
-// Try to use MMKV, fallback to AsyncStorage if not available
-let storage: MMKV | null = null;
-try {
-  storage = new MMKV();
-} catch (_error) {
-  // MMKV not available, will use AsyncStorage
-}
 
 type Theme = 'light' | 'dark';
 
@@ -196,15 +187,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const loadTheme = async () => {
     try {
-      let savedTheme: string | null = null;
-
-      if (storage) {
-        // Use MMKV
-        savedTheme = storage.getString(THEME_STORAGE_KEY) || null;
-      } else {
-        // Fallback to AsyncStorage
-        savedTheme = await AsyncStorage.getItem(THEME_STORAGE_KEY);
-      }
+      const savedTheme = await AsyncStorage.getItem(THEME_STORAGE_KEY);
 
       if (savedTheme === 'light' || savedTheme === 'dark') {
         setTheme(savedTheme);
@@ -220,13 +203,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const newTheme: Theme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     try {
-      if (storage) {
-        // Use MMKV (synchronous)
-        storage.set(THEME_STORAGE_KEY, newTheme);
-      } else {
-        // Fallback to AsyncStorage
-        await AsyncStorage.setItem(THEME_STORAGE_KEY, newTheme);
-      }
+      await AsyncStorage.setItem(THEME_STORAGE_KEY, newTheme);
     } catch (_error) {
       // Failed to save theme
     }
