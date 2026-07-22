@@ -161,13 +161,15 @@ export default ({ config }: ConfigContext): ExpoConfig => {
             // Noir module, witnesscalc query_identity, rapidsnark) require an
             // API 27 floor. Kept at 27 to match.
             minSdkVersion: 27,
-            // Google Play requires targetSdkVersion >= 35 (Android 15) for
-            // every app submitted or updated after 2025-08-31. compileSdk
-            // is bumped to match so the toolchain has the matching public
-            // APIs at compile time. No code changes needed at the floor
-            // level — Expo SDK 54 / RN 0.81 already officially support 35.
-            targetSdkVersion: 35,
-            compileSdkVersion: 35,
+            // Google Play requires targetSdkVersion >= 36 (Android 16) for
+            // every app submitted or updated after 2026-08-31 (the previous
+            // API 35 floor lapses then). compileSdk is bumped to match so the
+            // toolchain has the matching public APIs at compile time. No code
+            // changes needed — RN 0.81's own gradle config already defaults to
+            // targetSdk/compileSdk 36 (AGP 8.11, buildTools 36.0.0), so this
+            // just lifts the expo-build-properties pin up to that default.
+            targetSdkVersion: 36,
+            compileSdkVersion: 36,
             packagingOptions: {
               // The 16 KB-aligned libnoir_java.so in modules/noir-16k/noir.aar
               // is pre-stripped and then patched with patchelf (--add-needed

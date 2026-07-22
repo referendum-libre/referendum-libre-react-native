@@ -571,7 +571,7 @@ export default function VotingFlowScreen() {
         // on steps 1–3, full-width pill on steps 4+) doesn't sit flush against
         // the bottom of the screen. Needed on both platforms:
         //   • iOS: home-indicator strip on Face-ID devices.
-        //   • Android: targetSdkVersion 35 forces edge-to-edge regardless of
+        //   • Android: targetSdkVersion ≥ 35 forces edge-to-edge regardless of
         //     `edgeToEdgeEnabled: false`, so the 3-button nav bar and gesture
         //     pill now overlay app content instead of carving out space.
         //     insets.bottom is the height the system reserves (≈48dp on
