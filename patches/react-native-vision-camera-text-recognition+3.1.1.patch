@@ -1,5 +1,5 @@
 diff --git a/node_modules/react-native-vision-camera-text-recognition/android/build.gradle b/node_modules/react-native-vision-camera-text-recognition/android/build.gradle
-index c92292a..a8ffcda 100644
+index c92292a..49f39a1 100644
 --- a/node_modules/react-native-vision-camera-text-recognition/android/build.gradle
 +++ b/node_modules/react-native-vision-camera-text-recognition/android/build.gradle
 @@ -90,20 +90,20 @@ dependencies {
@@ -11,18 +11,11 @@ index c92292a..a8ffcda 100644
 -  implementation 'com.google.android.gms:play-services-mlkit-text-recognition-devanagari:16.0.1'
 -  implementation 'com.google.android.gms:play-services-mlkit-text-recognition-japanese:16.0.1'
 -  implementation 'com.google.android.gms:play-services-mlkit-text-recognition-korean:16.0.1'
-+  // Bundled ML Kit text recognition — works on degoogled devices (LineageOS,
-+  // GrapheneOS, e/OS). The unbundled 'com.google.android.gms:play-services-mlkit-*'
-+  // variants need Google Play Services to download the model at runtime and
-+  // fail on phones without GMS — see rarime-android-app gradle/libs.versions.toml
-+  // which uses the same bundled variant for the exact same MRZ-OCR purpose.
-+  // The Java API surface (com.google.mlkit.vision.text.*) is identical
-+  // between the two variants, so the wrapper Kotlin needs no changes.
++  // 'com.google.android.gms:play-services-mlkit-*' was downloading the text-recognition model
++  // at runtime from Google Play Services. It does not work on degoogled devices (LineageOS,
++  // GrapheneOs, e/OS, ...). We replace it by 'com.google.mlkit:text-recognition' as it ships
++  // with a local model and has the exact same API. (Only 'latin' model is needed.)
 +  implementation 'com.google.mlkit:text-recognition:16.0.1'
-+  implementation 'com.google.mlkit:text-recognition-chinese:16.0.1'
-+  implementation 'com.google.mlkit:text-recognition-devanagari:16.0.1'
-+  implementation 'com.google.mlkit:text-recognition-japanese:16.0.1'
-+  implementation 'com.google.mlkit:text-recognition-korean:16.0.1'
    implementation 'com.google.mlkit:translate:17.0.3'
    implementation project(':react-native-vision-camera')
    implementation "androidx.camera:camera-core:1.3.4"
@@ -36,13 +29,44 @@ index c92292a..a8ffcda 100644
  }
  
 diff --git a/node_modules/react-native-vision-camera-text-recognition/android/src/main/java/com/visioncameratextrecognition/VisionCameraTextRecognitionPlugin.kt b/node_modules/react-native-vision-camera-text-recognition/android/src/main/java/com/visioncameratextrecognition/VisionCameraTextRecognitionPlugin.kt
-index f48c947..bdd8506 100644
+index f48c947..0579d2e 100644
 --- a/node_modules/react-native-vision-camera-text-recognition/android/src/main/java/com/visioncameratextrecognition/VisionCameraTextRecognitionPlugin.kt
 +++ b/node_modules/react-native-vision-camera-text-recognition/android/src/main/java/com/visioncameratextrecognition/VisionCameraTextRecognitionPlugin.kt
-@@ -42,7 +42,7 @@ class VisionCameraTextRecognitionPlugin(proxy: VisionCameraProxy, options: Map<S
-         }
-     }
+@@ -10,10 +10,6 @@ import com.google.android.gms.tasks.Tasks
+ import com.google.mlkit.vision.common.InputImage
+ import com.google.mlkit.vision.text.Text
+ import com.google.mlkit.vision.text.TextRecognition
+-import com.google.mlkit.vision.text.chinese.ChineseTextRecognizerOptions
+-import com.google.mlkit.vision.text.devanagari.DevanagariTextRecognizerOptions
+-import com.google.mlkit.vision.text.japanese.JapaneseTextRecognizerOptions
+-import com.google.mlkit.vision.text.korean.KoreanTextRecognizerOptions
+ import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+ import com.mrousavy.camera.frameprocessors.Frame
+ import com.mrousavy.camera.frameprocessors.FrameProcessorPlugin
+@@ -23,26 +19,13 @@ import java.util.HashMap
+ class VisionCameraTextRecognitionPlugin(proxy: VisionCameraProxy, options: Map<String, Any>?) :
+     FrameProcessorPlugin() {
  
+-    private var recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+-    private val latinOptions = TextRecognizerOptions.DEFAULT_OPTIONS
+-    private val chineseOptions = ChineseTextRecognizerOptions.Builder().build()
+-    private val devanagariOptions = DevanagariTextRecognizerOptions.Builder().build()
+-    private val japaneseOptions = JapaneseTextRecognizerOptions.Builder().build()
+-    private val koreanOptions = KoreanTextRecognizerOptions.Builder().build()
++    private val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+ 
+-    init {
+-        val language = options?.get("language").toString()
+-        recognizer = when (language) {
+-            "latin" -> TextRecognition.getClient(latinOptions)
+-            "chinese" -> TextRecognition.getClient(chineseOptions)
+-            "devanagari" -> TextRecognition.getClient(devanagariOptions)
+-            "japanese" -> TextRecognition.getClient(japaneseOptions)
+-            "korean" -> TextRecognition.getClient(koreanOptions)
+-            else -> TextRecognition.getClient(latinOptions)
+-        }
+-    }
+-
 -    override fun callback(frame: Frame, arguments: Map<String, Any>?): HashMap<String, Any>? {
 +    override fun callback(frame: Frame, arguments: Map<String, Any>?): HashMap<String, Any?>? {
          val data = WritableNativeMap()
