@@ -3,11 +3,10 @@ import { StyleSheet, FlatList, View, Text, TouchableOpacity, ActivityIndicator, 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Application from 'expo-application';
 import { useColors, Typography, Spacing } from '@/constants/theme';
-import { referendumInfoUrl } from '@/constants/urls';
 import { Svg, Path } from 'react-native-svg';
 import * as WebBrowser from 'expo-web-browser';
 import { useRouter, useFocusEffect } from 'expo-router';
-import { getFreedomToolConfig } from '@/constants/rarime-config';
+import { getFreedomToolConfig } from '@/constants/rarimo/config';
 import type { ProposalInfo } from '@rarimo/rarime-rn-sdk';
 import { useTranslation } from 'react-i18next';
 import { useDevMode } from '@/contexts/DevModeContext';

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { DEFAULT_NETWORK, Network } from '@/constants/rarime-config';
+import { DEFAULT_NETWORK, Network } from '@/constants/rarimo/config';
 
 /**
  * Active-network context.

@@ -9,7 +9,7 @@ import {
   RARIME_MAINNET_CONFIG,
   MAINNET_CERT_POSEIDON_SMT_ADDRESS,
   type Network,
-} from '@/constants/rarime-config';
+} from '@/constants/rarimo/config';
 import type { Rarime, RarimePassport, FreedomTool } from '@rarimo/rarime-rn-sdk';
 import { useTranslation } from 'react-i18next';
 import {

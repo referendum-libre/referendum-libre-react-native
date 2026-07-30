@@ -72,7 +72,7 @@ import { Poseidon as IdenPoseidon } from '@iden3/js-crypto';
 import {
   RARIME_MAINNET_CONFIG,
   MAINNET_REGISTRATION_CONTRACT_ADDRESS,
-} from '@/constants/rarime-config';
+} from '@/constants/rarimo/config';
 import {
   buildQueryIdentityInputs,
   type RegistrationSmtProof,

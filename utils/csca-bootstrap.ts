@@ -46,7 +46,7 @@ import {
   buildRegisterCertificateCalldata,
   MAINNET_REGISTRATION2_ADDRESS,
 } from '@/utils/build-register-cert-calldata';
-import { RARIME_MAINNET_CONFIG } from '@/constants/rarime-config';
+import { RARIME_MAINNET_CONFIG } from '@/constants/rarimo/config';
 import { JsonRpcProvider, Contract, keccak256, toUtf8Bytes, ZeroAddress } from 'ethers';
 import i18n from 'i18next';
 

@@ -1,5 +1,5 @@
 import * as SecureStore from 'expo-secure-store';
-import { PRIVATE_KEY_STORAGE_KEY } from '@/constants/rarime-config';
+import { PRIVATE_KEY_STORAGE_KEY } from '@/constants/rarimo/config';
 import {
   addPassportKey,
   computePassportHash,

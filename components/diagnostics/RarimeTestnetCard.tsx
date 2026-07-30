@@ -13,7 +13,7 @@ import {
   DocumentStatus,
 } from '@rarimo/rarime-rn-sdk';
 import { useColors, Typography } from '@/constants/theme';
-import { PRIVATE_KEY_STORAGE_KEY } from '@/constants/rarime-config';
+import { PRIVATE_KEY_STORAGE_KEY } from '@/constants/rarimo/config';
 
 type Props = {
   // When provided, the full register-on-testnet flow is enabled.

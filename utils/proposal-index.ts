@@ -22,7 +22,7 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ed25519 } from '@noble/curves/ed25519';
-import type { Network } from '@/constants/rarime-config';
+import type { Network } from '@/constants/rarimo/config';
 import {
   PROPOSAL_INDEX_PUBLIC_KEY_HEX,
   PROPOSAL_INDEX_VERIFICATION_REQUIRED,

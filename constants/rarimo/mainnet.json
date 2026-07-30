@@ -1,0 +1,27 @@
+{
+  "rarime": {
+    "contractsConfiguration": {
+      "stateKeeperAddress": "0x61aa5b68D811884dA4FEC2De4a7AA0464df166E1",
+      "registerSimpleContractAddress": "0x497D6957729d3a39D43843BD27E6cbD12310F273",
+      "poseidonSmtAddress": "0x479F84502Db545FA8d2275372E0582425204A879"
+    },
+    "apiConfiguration": {
+      "jsonRpcEvmUrl": "https://l2.rarimo.com",
+      "rarimeApiUrl": "https://api.app.rarime.com"
+    }
+  },
+  "freedomTool": {
+    "contracts": {
+      "proposalStateAddress": "0x9C4b84a940C9D3140a1F40859b3d4367DC8d099a"
+    },
+    "api": {
+      "ipfsUrl": "https://ipfs.rarimo.com",
+      "votingRelayerUrl": "https://api.freedomtool.org",
+      "votingRpcUrl": "https://l2.rarimo.com"
+    }
+  },
+  "registrationContractAddress": "0x11BB4B14AA6e4b836580F3DBBa741dD89423B971",
+  "certPoseidonSmtAddress": "0xA8b350d699632569D5351B20ffC1b31202AcEDD8",
+  "explorerTxBaseUrl": "https://scan.rarimo.com/tx/",
+  "defaultProposalId": "1"
+}

@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, ScrollView, ActivityIndicator, TouchableOpacity
 import { Svg, Path } from 'react-native-svg';
 import { useTranslation } from 'react-i18next';
 import { useColors, Typography, Spacing } from '@/constants/theme';
-import { getFreedomToolConfig, getExplorerTxBaseUrl, type Network } from '@/constants/rarime-config';
+import { getFreedomToolConfig, getExplorerTxBaseUrl, type Network } from '@/constants/rarimo/config';
 import { classifyReceipt, type VoteTxStatus } from '@/utils/vote-confirmation';
 import { useNetwork } from '@/contexts/NetworkContext';
 import SettingsButton from '@/components/SettingsButton';

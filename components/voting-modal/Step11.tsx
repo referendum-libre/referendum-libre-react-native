@@ -3,7 +3,7 @@ import { View, Text, LayoutChangeEvent, Dimensions } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { createStepSpecificStyles } from './styles';
 import { useColors, Typography } from '@/constants/theme';
-import { formatRpcError, getFreedomToolConfig, type Network } from '@/constants/rarime-config';
+import { formatRpcError, getFreedomToolConfig, type Network } from '@/constants/rarimo/config';
 import type { ProposalInfo, Rarime, RarimePassport, FreedomTool } from '@rarimo/rarime-rn-sdk';
 import { useTranslation } from 'react-i18next';
 import { Buffer } from 'buffer';

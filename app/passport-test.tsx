@@ -25,7 +25,7 @@ import { Rarime, RarimePassport, RarimeUtils, DocumentStatus, FreedomTool } from
 import type { ProposalInfo } from "@rarimo/rarime-rn-sdk";
 import * as SecureStore from "expo-secure-store";
 import { Buffer } from "buffer";
-import { RARIME_TESTNET_CONFIG, PRIVATE_KEY_STORAGE_KEY, FREEDOM_TOOL_CONFIG } from "@/constants/rarime-config";
+import { RARIME_TESTNET_CONFIG, PRIVATE_KEY_STORAGE_KEY, FREEDOM_TOOL_CONFIG } from "@/constants/rarimo/config";
 
 // Format MRZ date (YYMMDD) to human-readable (DD/MM/YYYY)
 const formatMRZDate = (mrzDate: string | null, isExpiry: boolean = false): string => {

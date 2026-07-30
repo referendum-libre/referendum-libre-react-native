@@ -33,7 +33,7 @@ import {
   MAINNET_REGISTRATION_CONTRACT_ADDRESS,
   MAINNET_CERT_POSEIDON_SMT_ADDRESS,
   RARIME_MAINNET_CONFIG,
-} from '@/constants/rarime-config';
+} from '@/constants/rarimo/config';
 import { EPassport } from '@/utils/e-document/e-document';
 import {
   buildHeavyRegisterInputs,

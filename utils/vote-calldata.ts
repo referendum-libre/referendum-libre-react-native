@@ -33,8 +33,8 @@
  */
 
 import { ethers } from 'ethers';
-import type { Network } from '@/constants/rarime-config';
-import { FREEDOM_TOOL_MAINNET_CONFIG } from '@/constants/rarime-config';
+import type { Network } from '@/constants/rarimo/config';
+import { FREEDOM_TOOL_MAINNET_CONFIG } from '@/constants/rarimo/config';
 import type { Groth16Proof } from '@/utils/groth16-vote';
 
 /** Deployed Mainnet BioPassportVoting (the proposal's `votingWhitelist[0]`).

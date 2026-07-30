@@ -12,7 +12,7 @@ import {
   getDefaultProposalId,
   withRetry,
   formatRpcError,
-} from '@/constants/rarime-config';
+} from '@/constants/rarimo/config';
 import { useNetwork } from '@/contexts/NetworkContext';
 import { assertOnChainConstants } from '@/utils/register-via-noir';
 import { getOrCreatePrivateKey } from '@/utils/identity';

@@ -43,7 +43,7 @@ import {
   PRIVATE_KEY_STORAGE_KEY,
   withRetry,
   formatRpcError,
-} from "@/constants/rarime-config";
+} from "@/constants/rarimo/config";
 import { NfcDiagnosticCard } from "@/components/diagnostics/NfcDiagnosticCard";
 import { RarimeTestnetCard } from "@/components/diagnostics/RarimeTestnetCard";
 
