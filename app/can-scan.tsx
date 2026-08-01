@@ -39,7 +39,9 @@ export default function CanScanScreen() {
     if (!devMode) router.replace('/');
   }, [devMode, router]);
 
-  const [can, setCan] = React.useState("");
+  const [can, setCan] = React.useState(
+    () => process.env.EXPO_PUBLIC_DEV_VOTER_CAN?.replace(/[^0-9]/g, '').slice(0, 6) || ""
+  );
   const [isScanning, setIsScanning] = React.useState(false);
   const [scanStatus, setScanStatus] = React.useState("");
   const [error, setError] = React.useState<string | null>(null);

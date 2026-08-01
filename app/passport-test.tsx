@@ -64,9 +64,15 @@ export default function PassportTestScreen() {
   const consecutiveMatchRef = React.useRef(0);
 
   // MRZ data for passport reading
-  const [documentNo, setDocumentNo] = React.useState("");
-  const [birthDate, setBirthDate] = React.useState(""); // JJ/MM/AA format for display
-  const [expiryDate, setExpiryDate] = React.useState(""); // JJ/MM/AA format for display
+  const [documentNo, setDocumentNo] = React.useState(
+    () => process.env.EXPO_PUBLIC_DEV_MRZ_DOCUMENT_NO?.trim().toUpperCase() || ""
+  );
+  const [birthDate, setBirthDate] = React.useState(
+    () => process.env.EXPO_PUBLIC_DEV_MRZ_BIRTH_DATE || ""
+  ); // JJ/MM/AA format for display
+  const [expiryDate, setExpiryDate] = React.useState(
+    () => process.env.EXPO_PUBLIC_DEV_MRZ_EXPIRY_DATE || ""
+  ); // JJ/MM/AA format for display
 
   // NFC Debug logs state
   const [nfcLogs, setNfcLogs] = React.useState<string[]>([]);
