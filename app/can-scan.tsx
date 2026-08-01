@@ -3,11 +3,14 @@ import { useDevMode } from "@/contexts/DevModeContext";
 import { useRouter, Stack } from "expo-router";
 import React, { useEffect } from "react";
 import {
+  Keyboard,
+  KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
   Platform,
   Image,
@@ -174,7 +177,17 @@ export default function CanScanScreen() {
         <View style={styles.backButton} />
       </View>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.content}>
+      <KeyboardAvoidingView
+        style={styles.scrollView}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View>
         {/* Instructions */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Comment ça marche ?</Text>
@@ -197,11 +210,15 @@ export default function CanScanScreen() {
             placeholder="123456"
             placeholderTextColor={colors.textSecondary}
             editable={!isScanning}
+            returnKeyType="done"
+            onSubmitEditing={Keyboard.dismiss}
           />
           {isCanValid && (
             <Text style={styles.validText}>✓ CAN valide</Text>
           )}
         </View>
+        </View>
+        </TouchableWithoutFeedback>
 
         {/* Scan Button */}
         <TouchableOpacity
@@ -291,6 +308,7 @@ export default function CanScanScreen() {
 
         <View style={{ height: 100 }} />
       </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 }
