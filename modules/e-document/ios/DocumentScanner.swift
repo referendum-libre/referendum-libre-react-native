@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import NFCPassportReader
 
 struct BacKeyParameters: Codable {
     var documentNumber: String

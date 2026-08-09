@@ -1,5 +1,4 @@
 import ExpoModulesCore
-import NFCPassportReader
 
 enum DocumentScanEvents: String {
     case scanStarted = "SCAN_STARTED"
