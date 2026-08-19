@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Text, useWindowDimensions } from 'react-native';
-import { VideoView } from 'expo-video';
+import React from 'react';
+import { StyleSheet, ScrollView, View, Text, Image, useWindowDimensions } from 'react-native';
 import Accordion from '@/components/Accordion';
 import { useColors, Typography, Spacing } from '@/constants/theme';
-import { useComprendreVideo } from '@/contexts/VideoContext';
 import { useTranslation } from 'react-i18next';
 import SettingsButton from '@/components/SettingsButton';
 import { CAP_BIG } from '@/utils/font-scale-cap';
@@ -12,7 +10,6 @@ export default function ComprendreScreen() {
   const { t } = useTranslation();
   const colors = useColors();
   const styles = createStyles(colors);
-  const player = useComprendreVideo();
   // Scale the character animation in step with the welcome text so they grow
   // together — never below the design size, never past CAP_BIG.
   const { fontScale } = useWindowDimensions();
@@ -26,64 +23,6 @@ export default function ComprendreScreen() {
       }[])
     : [];
 
-  useEffect(() => {
-    if (!player) return;
-
-    // Start playing when screen is mounted
-    try {
-      player.play();
-    } catch (error) {
-      console.log('Error playing video:', error);
-    }
-
-    return () => {
-      // Pause when leaving screen. The player may already be released by its
-      // owning context during teardown — swallow that specific error since
-      // it's expected and non-actionable.
-      try {
-        player.pause();
-        player.currentTime = 0;
-      } catch (error: any) {
-        if (error?.code !== 'ERR_USING_RELEASED_SHARED_OBJECT') {
-          console.log('Error pausing video:', error);
-        }
-      }
-    };
-  }, [player]);
-
-  useEffect(() => {
-    if (!player) return;
-
-    let subscription: any;
-    try {
-      subscription = player.addListener('playingChange', (newStatus) => {
-        if (newStatus.isPlaying === false && player.currentTime >= player.duration - 0.1) {
-          // Video finished, wait 30 seconds before replaying
-          setTimeout(() => {
-            try {
-              player.currentTime = 0;
-              player.play();
-            } catch (error) {
-              console.log('Error replaying video:', error);
-            }
-          }, 30000);
-        }
-      });
-    } catch (error) {
-      console.log('Error adding listener:', error);
-    }
-
-    return () => {
-      if (subscription) {
-        try {
-          subscription.remove();
-        } catch (error) {
-          console.log('Error removing listener:', error);
-        }
-      }
-    };
-  }, [player]);
-
   return (
     <View style={styles.screenContainer}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentContainer} bounces={false}>
@@ -94,7 +33,7 @@ export default function ComprendreScreen() {
             <SettingsButton />
           </View>
           <View style={styles.welcomeContainer}>
-            <VideoView
+            <Image
               style={[
                 styles.characterVideo,
                 {
@@ -102,10 +41,8 @@ export default function ComprendreScreen() {
                   height: Spacing.video.characterHeight * welcomeMediaScale,
                 },
               ]}
-              player={player}
-              contentFit="cover"
-              nativeControls={false}
-              surfaceType="textureView"
+              source={require('@/assets/webp/comprendre-welcome.webp')}
+              resizeMode="cover"
             />
             <View style={styles.welcomeTextContainer}>
               <Text style={styles.welcomeText} maxFontSizeMultiplier={CAP_BIG}>

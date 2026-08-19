@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render, fireEvent, screen } from '@testing-library/react-native';
 
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
@@ -20,11 +20,14 @@ import { ThemeProvider } from '@/contexts/ThemeContext';
 // Whatever the (still unidentified) jump path is, this guard makes it
 // harmless: an unverified user cannot advance past Step 8.
 describe('Step8 vote-now guard', () => {
-  // ThemeProvider renders null until it has loaded the theme from
-  // AsyncStorage, so the button only appears after that async resolves.
+  // ThemeProvider loads the persisted theme from AsyncStorage and renders
+  // nothing until that promise settles, so wait for the button to appear
+  // before pressing it.
   const press = async (ui: React.ReactElement) => {
     const r = render(<ThemeProvider>{ui}</ThemeProvider>);
-    fireEvent.press(await r.findByText('Votez maintenant'));
+    // i18n fr: "Votez maintenant"; fall back to the raw key if i18n isn't
+    // initialised in the jest environment.
+    fireEvent.press(await screen.findByText(/Votez maintenant|step8VoteNow/));
     return r;
   };
 

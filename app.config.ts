@@ -112,6 +112,11 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       // (was ~290 MB universal). Play Store path uses AAB; Play splits
       // per ABI server-side.
       './plugins/withAndroidAbiSplits.js',
+      // Sets expo.webp.enabled / expo.webp.animated in gradle.properties so
+      // Fresco pulls in its animated-WebP decoder. The illustrated step
+      // animations ship as animated .webp and render as a still first frame on
+      // Android without it. See the file for the full rationale.
+      './plugins/withAnimatedWebp.js',
       [
         './plugins/withNfc.plugin/build/index.js',
         {

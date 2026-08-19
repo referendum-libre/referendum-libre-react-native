@@ -1,19 +1,17 @@
 import React from 'react';
 import { View, Text, ScrollView, LayoutChangeEvent, Platform, Image } from 'react-native';
-import { VideoView } from 'expo-video';
 import { createModalStyles, createStepSpecificStyles } from './styles';
 import { useColors } from '@/constants/theme';
 import { useTranslation } from 'react-i18next';
 import { CAP_SMALL } from '@/utils/font-scale-cap';
 
 interface Step3Props {
-  player: any;
   containerWidth: number;
   slideAreaHeight?: number;
   onLayout?: (event: LayoutChangeEvent) => void;
 }
 
-const Step3: React.FC<Step3Props> = ({ player, containerWidth, slideAreaHeight, onLayout }) => {
+const Step3: React.FC<Step3Props> = ({ containerWidth, slideAreaHeight, onLayout }) => {
   const { t } = useTranslation();
   const colors = useColors();
   const modalStyles = createModalStyles(colors);
@@ -29,22 +27,11 @@ const Step3: React.FC<Step3Props> = ({ player, containerWidth, slideAreaHeight, 
         bounces={false}
       >
         <View style={modalStyles.mediaContainer}>
-          {Platform.OS === 'android' ? (
-            <Image
-              source={require('@/assets/images/poster-ballot.png')}
-              style={stepSpecificStyles.ballotImage}
-              resizeMode="contain"
-            />
-          ) : (
-            <VideoView
-              style={stepSpecificStyles.ballotImage}
-              player={player}
-              contentFit="contain"
-              nativeControls={false}
-              surfaceType="textureView"
-              allowsVideoFrameAnalysis={false}
-            />
-          )}
+          <Image
+            source={require('@/assets/webp/step3-ballot.webp')}
+            style={stepSpecificStyles.ballotImage}
+            resizeMode="contain"
+          />
         </View>
         <View style={modalStyles.contentSection}>
           <View style={modalStyles.stepContent}>

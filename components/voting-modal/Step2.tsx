@@ -1,13 +1,11 @@
 import React from 'react';
 import { View, Text, ScrollView, LayoutChangeEvent, Platform, Image } from 'react-native';
-import { VideoView } from 'expo-video';
 import { createModalStyles, createStepSpecificStyles } from './styles';
 import { useColors } from '@/constants/theme';
 import { useTranslation } from 'react-i18next';
 import { CAP_SMALL } from '@/utils/font-scale-cap';
 
 interface Step2Props {
-  player: any;
   containerWidth: number;
   slideAreaHeight?: number;
   onLayout?: (event: LayoutChangeEvent) => void;
@@ -15,7 +13,6 @@ interface Step2Props {
 }
 
 const Step2: React.FC<Step2Props> = ({
-  player,
   containerWidth,
   slideAreaHeight,
   onLayout,
@@ -37,22 +34,11 @@ const Step2: React.FC<Step2Props> = ({
         bounces={false}
       >
         <View style={modalStyles.mediaContainer}>
-          {Platform.OS === 'android' ? (
-            <Image
-              source={require('@/assets/images/poster-phone.png')}
-              style={stepSpecificStyles.phoneImage}
-              resizeMode="contain"
-            />
-          ) : (
-            <VideoView
-              style={stepSpecificStyles.phoneImage}
-              player={player}
-              contentFit="contain"
-              nativeControls={false}
-              surfaceType="textureView"
-              allowsVideoFrameAnalysis={false}
-            />
-          )}
+          <Image
+            source={require('@/assets/webp/step2-phone.webp')}
+            style={stepSpecificStyles.phoneImage}
+            resizeMode="contain"
+          />
         </View>
         <View style={modalStyles.contentSection}>
           <View style={modalStyles.stepContent}>

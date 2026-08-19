@@ -1,29 +1,22 @@
 import React from 'react';
 import { View, Text, ScrollView, LayoutChangeEvent, Platform, Image } from 'react-native';
-import { VideoView } from 'expo-video';
 import { createModalStyles, createStepSpecificStyles } from './styles';
 import { useColors } from '@/constants/theme';
 import { useTranslation } from 'react-i18next';
 import { CAP_SMALL } from '@/utils/font-scale-cap';
 
 interface Step1Props {
-  player: any;
   containerWidth: number;
   /** Available slide-area height; caps the iOS ScrollView so content scrolls
    * only when it overflows. */
   slideAreaHeight?: number;
   onLayout?: (event: LayoutChangeEvent) => void;
-  /** True for TD3 passport flow; selects passport-themed poster art.
-   * Placeholder asset for now — see poster-passport.png. */
-  isPassportFlow?: boolean;
 }
 
 const Step1: React.FC<Step1Props> = ({
-  player,
   containerWidth,
   slideAreaHeight,
   onLayout,
-  isPassportFlow = false,
 }) => {
   const { t } = useTranslation();
   const colors = useColors();
@@ -41,30 +34,11 @@ const Step1: React.FC<Step1Props> = ({
         bounces={false}
       >
         <View style={modalStyles.mediaContainer}>
-          {Platform.OS === 'android' ? (
-            <Image
-              // poster-passport.png is currently a placeholder copy of
-              // poster-card.png — replace with passport-themed art before
-              // production. The conditional require lives directly inside
-              // the JSX so Metro statically resolves both paths.
-              source={
-                isPassportFlow
-                  ? require('@/assets/images/poster-passport.png')
-                  : require('@/assets/images/poster-card.png')
-              }
-              style={stepSpecificStyles.cardVideo}
-              resizeMode="cover"
-            />
-          ) : (
-            <VideoView
-              style={stepSpecificStyles.cardVideo}
-              player={player}
-              contentFit="cover"
-              nativeControls={false}
-              surfaceType="textureView"
-              allowsVideoFrameAnalysis={false}
-            />
-          )}
+          <Image
+            source={require('@/assets/webp/step1-card.webp')}
+            style={stepSpecificStyles.cardVideo}
+            resizeMode="cover"
+          />
         </View>
         <View style={modalStyles.contentSection}>
           <View style={modalStyles.stepContent}>

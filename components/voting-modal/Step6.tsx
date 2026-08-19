@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, TouchableOpacity, LayoutChangeEvent, Platform, Image, ScrollView, Alert, Linking, AppState } from 'react-native';
 import NfcManager from 'react-native-nfc-manager';
-import { VideoView } from 'expo-video';
 import { createModalStyles, createStepSpecificStyles } from './styles';
 import { useColors, Typography } from '@/constants/theme';
 import { getRandomValues } from 'expo-crypto';
@@ -17,7 +16,6 @@ const DEV_EXAMPLE_PASSPORT_DATA = loadDevExamplePassportData();
 
 interface Step6Props {
   containerWidth: number;
-  player: any;
   mrzData?: {
     documentNumber: string;
     birthDate: string;
@@ -34,7 +32,7 @@ interface Step6Props {
   isPassportFlow?: boolean;
 }
 
-const Step6: React.FC<Step6Props> = ({ containerWidth, player, mrzData, onAnalyze, onNFCSuccess, onNFCError, onGoBack, onLayout, isPassportFlow = false }) => {
+const Step6: React.FC<Step6Props> = ({ containerWidth, mrzData, onAnalyze, onNFCSuccess, onNFCError, onGoBack, onLayout, isPassportFlow = false }) => {
   const { t } = useTranslation();
   const docSfx = isPassportFlow ? 'passport' : 'idCard';
   const { devMode } = useDevMode();
@@ -391,26 +389,11 @@ const Step6: React.FC<Step6Props> = ({ containerWidth, player, mrzData, onAnalyz
         <Text style={stepSpecificStyles.step6Title}>{t(`voting.step6Title_${docSfx}`)}</Text>
 
         <View style={stepSpecificStyles.step6ImageContainer}>
-          {Platform.OS === 'android' ? (
-            <Image
-              // poster-phone-over-passport.png is currently a placeholder
-              // copy of poster-phone-over-card.png — replace with passport-
-              // themed art before production.
-              source={isPassportFlow
-                ? require('@/assets/images/poster-phone-over-passport.png')
-                : require('@/assets/images/poster-phone-over-card.png')}
-              style={stepSpecificStyles.step6Image}
-              resizeMode="contain"
-            />
-          ) : (
-            <VideoView
-              style={stepSpecificStyles.step6Image}
-              player={player}
-              contentFit="contain"
-              nativeControls={false}
-              surfaceType="textureView"
-            />
-          )}
+          <Image
+            source={require('@/assets/webp/step6-nfc.webp')}
+            style={stepSpecificStyles.step6Image}
+            resizeMode="contain"
+          />
         </View>
 
         <Text style={{

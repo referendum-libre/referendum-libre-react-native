@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, LayoutChangeEvent, Platform, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { VideoView } from 'expo-video';
 import { createStepSpecificStyles } from './styles';
 import { useColors, Typography } from '@/constants/theme';
 import {
@@ -59,7 +58,6 @@ interface NFCData {
 
 interface Step7Props {
   containerWidth: number;
-  player: any;
   isActive?: boolean;
   nfcData?: NFCData | null;
   onSuccess?: () => void;
@@ -85,8 +83,7 @@ interface Step7Props {
 
 const Step7: React.FC<Step7Props> = ({
   containerWidth,
-  player,
-  isActive,
+    isActive,
   nfcData,
   onSuccess,
   onError,
@@ -574,21 +571,11 @@ const Step7: React.FC<Step7Props> = ({
             and getting clipped. Collapsing the image gives the error text the
             vertical budget it needs to fully render. */}
         {!errorMessage && (
-          Platform.OS === 'android' ? (
-            <Image
-              source={require('@/assets/images/poster-verify.png')}
-              style={stepSpecificStyles.step7Image}
-              resizeMode="contain"
-            />
-          ) : (
-            <VideoView
-              style={stepSpecificStyles.step7Image}
-              player={player}
-              contentFit="contain"
-              nativeControls={false}
-              surfaceType="textureView"
-            />
-          )
+          <Image
+            source={require('@/assets/webp/step7-verify.webp')}
+            style={stepSpecificStyles.step7Image}
+            resizeMode="contain"
+          />
         )}
 
         {/* Spinner + description as direct children of step7Container.

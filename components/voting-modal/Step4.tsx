@@ -7,7 +7,6 @@ import { useColors } from '@/constants/theme';
 import { useTranslation } from 'react-i18next';
 
 interface Step4Props {
-  player: any;
   // Intro clip that plays *before* the "Démarrer l'analyse" content.
   // Optional so the test renders stay green.
   introPlayer?: any;
@@ -17,7 +16,7 @@ interface Step4Props {
   isPassportFlow?: boolean;
 }
 
-const Step4: React.FC<Step4Props> = ({ player, introPlayer, containerWidth, onStartAnalysis, onLayout, isPassportFlow = false }) => {
+const Step4: React.FC<Step4Props> = ({ introPlayer, containerWidth, onStartAnalysis, onLayout, isPassportFlow = false }) => {
   const { t } = useTranslation();
   const docSfx = isPassportFlow ? 'passport' : 'idCard';
   const colors = useColors();
@@ -81,25 +80,11 @@ const Step4: React.FC<Step4Props> = ({ player, introPlayer, containerWidth, onSt
         <View style={stepSpecificStyles.step4Content}>
           <Text style={stepSpecificStyles.step4Title}>{t(`voting.step4Title_${docSfx}`)}</Text>
         </View>
-        {Platform.OS === 'android' ? (
-          <Image
-            // poster-passport.png is currently a placeholder copy of
-            // poster-card.png — see Step1.tsx for the same TODO.
-            source={isPassportFlow
-              ? require('@/assets/images/poster-passport.png')
-              : require('@/assets/images/poster-card.png')}
-            style={stepSpecificStyles.step4Video}
-            resizeMode="cover"
-          />
-        ) : (
-          <VideoView
-            style={stepSpecificStyles.step4Video}
-            player={player}
-            contentFit="cover"
-            nativeControls={false}
-            surfaceType="textureView"
-          />
-        )}
+        <Image
+          source={require('@/assets/webp/step1-card.webp')}
+          style={stepSpecificStyles.step4Video}
+          resizeMode="cover"
+        />
         <TouchableOpacity
           style={stepSpecificStyles.step4Button}
           activeOpacity={0.8}

@@ -98,7 +98,7 @@ export default function VotingFlowScreen() {
   const progressOpacity3 = useRef(new Animated.Value(0.25)).current;
 
   const { players, handleStepChange, pauseAll } = useModalVideoPlayers();
-  const { player1, player2, player3, player4, player5, playerIntro } = players;
+  const { playerIntro } = players;
 
   // If the user switches network from Settings while the voting-flow screen
   // is still mounted (rare — would require backing out to Settings and back),
@@ -664,10 +664,10 @@ export default function VotingFlowScreen() {
                 <View key={key} style={{ width: containerWidth }} />
               );
               return [
-                show(0) ? <Step1 key="s1" player={player1} containerWidth={containerWidth} slideAreaHeight={slideAreaHeight} isPassportFlow={isPassportFlow} /> : spacer('s1'),
-                show(1) ? <Step2 key="s2" player={player2} containerWidth={containerWidth} slideAreaHeight={slideAreaHeight} isPassportFlow={isPassportFlow} /> : spacer('s2'),
-                show(2) ? <Step3 key="s3" player={player3} containerWidth={containerWidth} slideAreaHeight={slideAreaHeight} /> : spacer('s3'),
-                show(3) ? <Step4 key="s4" player={player1} introPlayer={playerIntro} containerWidth={containerWidth} onStartAnalysis={handleNext} isPassportFlow={isPassportFlow} /> : spacer('s4'),
+                show(0) ? <Step1 key="s1" containerWidth={containerWidth} slideAreaHeight={slideAreaHeight} /> : spacer('s1'),
+                show(1) ? <Step2 key="s2" containerWidth={containerWidth} slideAreaHeight={slideAreaHeight} isPassportFlow={isPassportFlow} /> : spacer('s2'),
+                show(2) ? <Step3 key="s3" containerWidth={containerWidth} slideAreaHeight={slideAreaHeight} /> : spacer('s3'),
+                show(3) ? <Step4 key="s4" introPlayer={playerIntro} containerWidth={containerWidth} onStartAnalysis={handleNext} isPassportFlow={isPassportFlow} /> : spacer('s4'),
                 show(4) ? (
                   <Step5
                     key="s5"
@@ -688,7 +688,6 @@ export default function VotingFlowScreen() {
                   <Step6
                     key="s6"
                     containerWidth={containerWidth}
-                    player={player4}
                     mrzData={mrzData}
                     onNFCSuccess={handleNFCSuccess}
                     onGoBack={handleGoBackToMRZScan}
@@ -699,7 +698,6 @@ export default function VotingFlowScreen() {
                   <Step7
                     key="s7"
                     containerWidth={containerWidth}
-                    player={player5}
                     isActive={currentStep === 7}
                     nfcData={nfcData}
                     onSuccess={handleVerificationSuccess}
@@ -734,7 +732,6 @@ export default function VotingFlowScreen() {
                   <Step10
                     key="s10"
                     containerWidth={containerWidth}
-                    player={player3}
                     selectedVote={selectedVote}
                     proposalInfo={proposalInfo ?? undefined}
                     onCancel={handleStep9Cancel}

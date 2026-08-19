@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity, LayoutChangeEvent, Platform, Image } from 'react-native';
-import { VideoView } from 'expo-video';
+import { View, Text, TouchableOpacity, LayoutChangeEvent, Image } from 'react-native';
 import { createModalStyles, createStepSpecificStyles } from './styles';
 import { useColors } from '@/constants/theme';
 import type { ProposalInfo } from '@rarimo/rarime-rn-sdk';
@@ -8,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 
 interface Step10Props {
   containerWidth: number;
-  player: any;
   onCancel?: () => void;
   onConfirm?: () => void;
   onLayout?: (event: LayoutChangeEvent) => void;
@@ -16,7 +14,7 @@ interface Step10Props {
   proposalInfo?: ProposalInfo;
 }
 
-const Step10: React.FC<Step10Props> = ({ containerWidth, player, onCancel, onConfirm, onLayout, selectedVote = 0, proposalInfo }) => {
+const Step10: React.FC<Step10Props> = ({ containerWidth, onCancel, onConfirm, onLayout, selectedVote = 0, proposalInfo }) => {
   const { t } = useTranslation();
   const colors = useColors();
   const modalStyles = createModalStyles(colors);
@@ -43,21 +41,11 @@ const Step10: React.FC<Step10Props> = ({ containerWidth, player, onCancel, onCon
             {t('voting.step10Confirm', { vote: getVoteText() })}
           </Text>
 
-          {Platform.OS === 'android' ? (
-            <Image
-              source={require('@/assets/images/poster-ballot.png')}
-              style={stepSpecificStyles.step10BallotVideo}
-              resizeMode="cover"
-            />
-          ) : (
-            <VideoView
-              style={stepSpecificStyles.step10BallotVideo}
-              player={player}
-              contentFit="cover"
-              nativeControls={false}
-              surfaceType="textureView"
-            />
-          )}
+          <Image
+            source={require('@/assets/webp/step3-ballot.webp')}
+            style={stepSpecificStyles.step10BallotVideo}
+            resizeMode="cover"
+          />
         </View>
 
         <View style={stepSpecificStyles.step10ButtonContainer}>
