@@ -139,6 +139,13 @@ The one-time signing-keystore setup (`keytool` recipe + required GitHub
 secrets) is documented in the header of
 `.github/workflows/android-release.yml`.
 
+## Forking for a new app
+
+This codebase is designed to be forked. (Almost) all the configuration is in :
+- `.env`: PUBLIC data, committed to the main repo
+- `.env.local`: PRIVATE data (secrets). see `.env.local.example`.
+- `assets`: for images, etc.
+
 ## Testing
 
 ```bash

@@ -46,8 +46,8 @@ Thumbs.db
 !.vscode/extensions.json
 .idea/
 
-# local env files
-.env
+# .env is committed on purpose (per-fork app config)
+# env.local (and variants) (secrets) are gitignored.
 .env*.local
 secrets/
 

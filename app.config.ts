@@ -1,14 +1,19 @@
 import { ConfigContext, ExpoConfig } from '@expo/config';
 
+// Per-fork app identity, read from `.env` (committed, public — see
+// CONTRIBUTING.md ▸ "Forking for a new app"). Expo loads `.env`/`.env.local`
+// into process.env automatically before this file runs, so no dotenv setup
+// is needed here.
+
 export default ({ config }: ConfigContext): ExpoConfig => {
   return {
     ...config,
-    name: 'Referendum Libre',
-    slug: 'referendum-libre',
+    name: process.env.APP_NAME as string,
+    slug: process.env.APP_SLUG as string,
     version: '1.0.0',
     orientation: 'portrait',
     icon: './assets/images/app-icon.png',
-    scheme: 'referendumlibre',
+    scheme: process.env.APP_SCHEME,
     userInterfaceStyle: 'automatic',
     newArchEnabled: true,
     splash: {
@@ -18,7 +23,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     },
     ios: {
       supportsTablet: false,
-      bundleIdentifier: 'app.referendumcitoyen.fr',
+      bundleIdentifier: process.env.IOS_BUNDLE_IDENTIFIER,
       deploymentTarget: '16.0',
       infoPlist: {
         ITSAppUsesNonExemptEncryption: false,
@@ -39,7 +44,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
       },
     },
     android: {
-      package: 'fr.referendumcitoyen.app',
+      package: process.env.ANDROID_PACKAGE,
       adaptiveIcon: {
         foregroundImage: './assets/images/app-icon-android.png',
         backgroundColor: '#ffffff',

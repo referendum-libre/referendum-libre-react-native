@@ -4,7 +4,6 @@ import * as Sharing from 'expo-sharing';
 import * as Application from 'expo-application';
 import i18n from 'i18next';
 import { snapshotBuffer, formatSessionHeader, LogEntry, redact } from './logger';
-import { ERROR_REPORT_EMAIL } from '@/constants/urls';
 
 // Errors that the app already explains to the user and that do not benefit
 // from a developer report. Extend the list as new predictable failure modes
@@ -144,7 +143,7 @@ export async function sendErrorReport(uri: string): Promise<void> {
 
   if (await MailComposer.isAvailableAsync()) {
     await MailComposer.composeAsync({
-      recipients: [ERROR_REPORT_EMAIL],
+      recipients: [process.env.EXPO_PUBLIC_ERROR_REPORT_EMAIL!],
       subject,
       body,
       attachments: [uri],

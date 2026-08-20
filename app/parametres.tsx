@@ -9,7 +9,6 @@ import { useRouter } from 'expo-router';
 import { useDevMode } from '@/contexts/DevModeContext';
 import { useNetwork } from '@/contexts/NetworkContext';
 import { useExtraProposals } from '@/contexts/ExtraProposalsContext';
-import { LEGAL_URLS, CONTACT_EMAIL } from '@/constants/urls';
 import { getContactInfoVars } from '@/utils/contact-info';
 
 const CaretRightIcon = ({ color, size = 24 }: { color: string; size?: number }) => (
@@ -91,14 +90,18 @@ export default function ParametresScreen() {
     const body = t('settings.contactBody', vars);
     try {
       if (await MailComposer.isAvailableAsync()) {
-        await MailComposer.composeAsync({ recipients: [CONTACT_EMAIL], subject, body });
+        await MailComposer.composeAsync({
+          recipients: [process.env.EXPO_PUBLIC_CONTACT_EMAIL!],
+          subject,
+          body,
+        });
         return;
       }
     } catch {
       // fall through to the mailto: fallback below
     }
     Linking.openURL(
-      `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+      `mailto:${process.env.EXPO_PUBLIC_CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
     );
   };
 
@@ -123,7 +126,7 @@ export default function ParametresScreen() {
           <TouchableOpacity
             style={styles.settingRow}
             activeOpacity={0.7}
-            onPress={() => Linking.openURL(LEGAL_URLS.privacyPolicy)}
+            onPress={() => Linking.openURL(process.env.EXPO_PUBLIC_LEGAL_PRIVACY_POLICY_URL!)}
           >
             <Text style={styles.settingLabel}>{t('settings.privacyPolicy')}</Text>
             <CaretRightIcon color={colors.icon} size={Spacing.icon.size} />

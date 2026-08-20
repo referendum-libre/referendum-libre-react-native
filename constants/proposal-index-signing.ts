@@ -6,7 +6,8 @@
  * `proposals.json` and `proposals.json.sig` to Pages.
  *
  * Setup (one-time): run `node scripts/generate-proposal-signing-key.mjs`,
- * paste the public key here, paste the private key into repo secrets.
+ * paste the public key into `.env` (EXPO_PUBLIC_PROPOSAL_INDEX_PUBLIC_KEY_HEX),
+ * paste the private key into the PROPOSAL_INDEX_SIGNING_KEY repo secret.
  *
  * Trust model: this key gates which proposals appear in the list. It does
  * NOT gate the proposal contents — those still come from the on-chain
@@ -23,10 +24,14 @@
  * utils/proposal-index.ts) until they update.
  */
 
-// Placeholder. Replace with the hex output of
+// Placeholder default, used if EXPO_PUBLIC_PROPOSAL_INDEX_PUBLIC_KEY_HEX is
+// unset in `.env`. Replace the env var with the hex output of
 // `node scripts/generate-proposal-signing-key.mjs`.
-export const PROPOSAL_INDEX_PUBLIC_KEY_HEX =
+const PLACEHOLDER_PUBLIC_KEY_HEX =
   '23931f71115aacd5a236ab1a28ebb011ec0dfe8e881f7040071c6fa258fc9539'; //nosec: public key
+
+export const PROPOSAL_INDEX_PUBLIC_KEY_HEX =
+  process.env.EXPO_PUBLIC_PROPOSAL_INDEX_PUBLIC_KEY_HEX ?? PLACEHOLDER_PUBLIC_KEY_HEX; //nosec: public key
 
 /**
  * When the placeholder is in place, verification is *soft-disabled*: the
@@ -39,6 +44,4 @@ export const PROPOSAL_INDEX_PUBLIC_KEY_HEX =
  * key is set, the soft mode auto-disables.
  */
 export const PROPOSAL_INDEX_VERIFICATION_REQUIRED =
-  PROPOSAL_INDEX_PUBLIC_KEY_HEX !==
-  '23931f71115aacd5a236ab1a28ebb011ec0dfe8e881f7040071c6fa258fc9539'; //nosec: public key
-
+  PROPOSAL_INDEX_PUBLIC_KEY_HEX !== PLACEHOLDER_PUBLIC_KEY_HEX;

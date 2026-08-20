@@ -56,8 +56,7 @@ interface NetworkBlock {
   devOnly: string[];
 }
 
-const INDEX_URL =
-  'https://referendum-libre.github.io/referendum-libre-react-native/proposals.json';
+const INDEX_URL = process.env.EXPO_PUBLIC_PROPOSAL_INDEX_URL!;
 const INDEX_SIG_URL = `${INDEX_URL}.sig`;
 
 const CACHE_KEY = 'proposal_index_v1';

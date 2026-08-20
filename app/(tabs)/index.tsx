@@ -746,7 +746,7 @@ export default function AccueilScreen() {
             activeOpacity={0.7}
             accessibilityRole="link"
             accessibilityLabel={t('home.referendumLearnMore')}
-            onPress={() => WebBrowser.openBrowserAsync(referendumInfoUrl(p.id))}
+            onPress={() => WebBrowser.openBrowserAsync(`${process.env.EXPO_PUBLIC_REFERENDUMS_BASE_URL}${p.id}`)}
             style={styles.learnMoreLink}
           >
             <Text style={styles.learnMoreText}>{t('home.referendumLearnMore')}</Text>
