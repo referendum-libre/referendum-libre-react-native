@@ -44,8 +44,8 @@ public class EDocumentModule: Module {
         // is by default dispatched on the different thread than the JavaScript runtime runs on.
         AsyncFunction("scanDocument") { (documentType: String, bacKeyParametersJson: String, challenge: Data) in
             // Note: documentType parameter added for consistency with Android
-            // iOS NFCPassportReader currently only supports passports, not ID cards
-            // For ID cards ('I'), we'll attempt to read but may encounter limitations
+            // Supports both passports ('P') and ID cards ('I')
+            // For ID cards with CAN, uses PACE with password type 0x02 (AUTH 2)
 
             let bacKeyParameters = try JSONDecoder().decode(BacKeyParameters.self, from: bacKeyParametersJson.data(using: .utf8)!)
 
@@ -69,6 +69,14 @@ public class EDocumentModule: Module {
 
             let canKey = bacKeyParameters.can
 
+            // Log CAN usage for PACE AUTH 2 (similar to Android implementation)
+            if let can = canKey, !can.isEmpty {
+                debugLog("=== PACE Authentication with CAN (AUTH 2) ===")
+                debugLog("CAN provided: using PACE Key Type 0x02")
+            } else if documentType == "I" {
+                debugLog("=== ID Card without CAN - attempting PACE with MRZ ===")
+            }
+
             // DG2 (facial image) is intentionally NOT read — it serves no
             // purpose in the eligibility flow (proof uses DG1 only); skipping
             // it is data minimisation (DPIA R5 #5).
@@ -80,6 +88,7 @@ public class EDocumentModule: Module {
 
             do {
                 debugLog("Starting PassportReader...")
+                debugLog("PACE: \(documentType == "P" ? "skipped (passport)" : "enabled (ID card)")")
                 let nfcPassport = try await PassportReader()
                     .readPassport(
                         mrzKey: mrzKey,
@@ -131,6 +140,16 @@ public class EDocumentModule: Module {
                     )
 
                 debugLog("=== NFC Read Complete ===")
+
+                // Log PACE success for ID cards (similar to Android)
+                if documentType == "I" {
+                    if let can = canKey, !can.isEmpty {
+                        debugLog("=== PACE with CAN (AUTH 2) SUCCEEDED ===")
+                    } else {
+                        debugLog("=== PACE with MRZ SUCCEEDED ===")
+                    }
+                }
+
                 let passport = Passport.fromNFCPassportModel(nfcPassport)
                 debugLog("DG1 size: \(passport.dg1.count) chars")
                 debugLog("DG11 size: \(passport.dg11?.count ?? 0) chars")

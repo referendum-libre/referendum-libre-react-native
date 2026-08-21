@@ -214,18 +214,18 @@ class DocumentScanner(
     )
     service.open()
 
-    // -- PACE -- //
+    // -- PACE (for passports with MRZ) -- //
     var paceSucceeded = false
     try {
-      android.util.Log.d("DocumentScanner", "=== Trying PACE Authentication ===")
-      android.util.Log.d("DocumentScanner", "Reading EF_CARD_ACCESS...")
+      onDebugLog("=== Trying PACE Authentication with MRZ ===")
+      onDebugLog("Reading EF_CARD_ACCESS...")
       val cardAccessFile = CardAccessFile(service.getInputStream(PassportService.EF_CARD_ACCESS))
 
       val paceKey = PACEKeySpec.createMRZKey(bacKey)
 
       val paceInfo = cardAccessFile.securityInfos.filterIsInstance<PACEInfo>().first()
-      android.util.Log.d("DocumentScanner", "PACE OID: ${paceInfo.objectIdentifier}")
-      android.util.Log.d("DocumentScanner", "PACE paramId: ${paceInfo.parameterId}")
+      onDebugLog("PACE OID: ${paceInfo.objectIdentifier}")
+      onDebugLog("PACE paramId: ${paceInfo.parameterId}")
       service.doPACE(
         paceKey,
         paceInfo.objectIdentifier,
@@ -233,9 +233,9 @@ class DocumentScanner(
         null
       )
       paceSucceeded = true
-      android.util.Log.d("DocumentScanner", "=== PACE SUCCEEDED ===")
+      onDebugLog("=== PACE with MRZ SUCCEEDED ===")
     } catch (e: Exception) {
-      android.util.Log.d("DocumentScanner", "[ERROR] PACE failed: ${e.message}")
+      onDebugLog("[ERROR] PACE failed: ${e.message}")
       e.printStackTrace()
     }
     service.sendSelectApplet(paceSucceeded)
@@ -345,6 +345,8 @@ class DocumentScanner(
     onDebugLog: (String) -> Unit = {},
   ): NFCDocumentModel {
     onAuthenticatingWithPassport()
+    onDebugLog("=== Starting ID Card Scan ===")
+
     // Open the card service connection with logging wrapper
     val rawCardService = CardService.getInstance(isoDep)
     rawCardService.open()
@@ -359,12 +361,13 @@ class DocumentScanner(
     )
     service.open()
 
-    // -- PACE (for French ID cards) -- //
+    // -- PACE (for ID cards with CAN or MRZ) -- //
+    // CAN uses password type 0x02 (AUTH 2) for PACE authentication
     var paceSucceeded = false
 
     if (!bacKeyParameters.can.isNullOrEmpty()) {
       try {
-        onDebugLog("=== PACE Authentication Starting ===")
+        onDebugLog("=== PACE Authentication with CAN (AUTH 2) ===")
 
         val canBytes = bacKeyParameters.can!!.toByteArray(Charsets.US_ASCII)
 
@@ -374,7 +377,7 @@ class DocumentScanner(
         onDebugLog("Found ${securityInfoCollection.size} security infos")
 
         val paceKey = PACEKeySpec(canBytes, 0x02.toByte())
-        onDebugLog("PACE Key Type: CAN (0x02)")
+        onDebugLog("PACE Key Type: CAN (AUTH 2 / 0x02)")
 
         for (securityInfo in securityInfoCollection.toList()) {
           if (securityInfo is PACEInfo) {
@@ -388,26 +391,27 @@ class DocumentScanner(
               null
             )
             paceSucceeded = true
-            onDebugLog("=== PACE SUCCEEDED ===")
+            onDebugLog("=== PACE with CAN (AUTH 2) SUCCEEDED ===")
+            break
           }
         }
       } catch (e: Exception) {
-        onDebugLog("[ERROR] PACE failed: ${e.message}")
+        onDebugLog("[ERROR] PACE with CAN failed: ${e.message}")
         e.printStackTrace()
         // Continue to try without PACE or with BAC
       }
     } else {
-      // No CAN — try PACE with MRZ key (works for French CNIe)
+      // No CAN — try PACE with MRZ key (works for some ID cards like French CNIe)
       try {
-        onDebugLog("=== PACE with MRZ key (no CAN) ===")
+        onDebugLog("=== ID Card without CAN - attempting PACE with MRZ ===")
         val cardAccessFile = CardAccessFile(service.getInputStream(PassportService.EF_CARD_ACCESS))
         val paceInfo = cardAccessFile.securityInfos.filterIsInstance<PACEInfo>().first()
         val paceKey = PACEKeySpec.createMRZKey(bacKey)
         service.doPACE(paceKey, paceInfo.objectIdentifier, PACEInfo.toParameterSpec(paceInfo.parameterId), null)
         paceSucceeded = true
-        onDebugLog("=== PACE with MRZ key SUCCEEDED ===")
+        onDebugLog("=== PACE with MRZ SUCCEEDED ===")
       } catch (e: Exception) {
-        onDebugLog("PACE with MRZ key failed: ${e.message}")
+        onDebugLog("PACE with MRZ failed: ${e.message}")
       }
     }
 

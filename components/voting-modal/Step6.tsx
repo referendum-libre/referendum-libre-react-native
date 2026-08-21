@@ -21,6 +21,10 @@ interface Step6Props {
     birthDate: string;
     expiryDate: string;
   } | null;
+  /** The 6-digit CAN collected in Step 5 (CAN mode). When present it's
+   * used as the PACE key and `mrzData` is not required; otherwise the
+   * scan falls back to the MRZ-derived BAC key. */
+  canData?: { can: string } | null;
   onAnalyze?: () => void;
   onNFCSuccess?: (data: any) => void;
   onNFCError?: () => void;
@@ -32,7 +36,7 @@ interface Step6Props {
   isPassportFlow?: boolean;
 }
 
-const Step6: React.FC<Step6Props> = ({ containerWidth, mrzData, onAnalyze, onNFCSuccess, onNFCError, onGoBack, onLayout, isPassportFlow = false }) => {
+const Step6: React.FC<Step6Props> = ({ containerWidth, mrzData, canData, onAnalyze, onNFCSuccess, onNFCError, onGoBack, onLayout, isPassportFlow = false }) => {
   const { t } = useTranslation();
   const docSfx = isPassportFlow ? 'passport' : 'idCard';
   const { devMode } = useDevMode();
@@ -144,11 +148,13 @@ const Step6: React.FC<Step6Props> = ({ containerWidth, mrzData, onAnalyze, onNFC
   }, []);
 
   const handleAnalyzePress = async () => {
-    // Operational only — no PII. mrzData contains documentNumber + DOB
-    // which are the BAC key inputs; logging them would leak both to
-    // logcat / Metro stdout.
-    console.log('[Step6] handleAnalyzePress called, mrzData present:', !!mrzData);
-    if (!mrzData) {
+    // Two ways in: the CAN entered in Step 5's CAN mode (PACE key), or the
+    // MRZ scanned by the camera (BAC key). CAN wins when both are present.
+    // Operational only — no PII: the CAN, documentNumber and DOB are all
+    // chip-unlocking credentials, so only their presence is logged.
+    const useCan = !!canData?.can;
+    console.log(`[Step6] handleAnalyzePress called, key=${useCan ? 'CAN' : 'MRZ'} present=${useCan || !!mrzData}`);
+    if (!useCan && !mrzData) {
       setScanStatus(t('voting.step6MissingMrz'));
       return;
     }
@@ -224,24 +230,31 @@ const Step6: React.FC<Step6Props> = ({ containerWidth, mrzData, onAnalyze, onNFC
       }
 
       setScanStatus(t(`voting.step6Now_${docSfx}`));
-      // BAC-key inputs (documentNumber, birthDate, expiryDate) intentionally
-      // omitted — logging them would leak the user's doc number + DOB.
-      console.log(`[Step6] Starting scanDocument type=${isPassportFlow ? 'P' : 'I'}`);
+      // Key material (CAN / documentNumber / dates) intentionally omitted —
+      // logging it would leak the credentials that unlock the chip.
+      console.log(`[Step6] Starting scanDocument type=${isPassportFlow ? 'P' : 'I'} key=${useCan ? 'CAN/PACE' : 'MRZ/BAC'}`);
 
       let timeoutId: ReturnType<typeof setTimeout> | undefined;
       const timeoutPromise = new Promise<never>((_, reject) => {
         timeoutId = setTimeout(() => reject(new Error('NFC scan timeout')), 30000);
       });
 
-      // 'I' = TD1 ID card → PACE polling on Type A (skipPACE=false), the
-      // protocol French CNIes use. 'P' = TD3 passport → Type B + BAC.
-      // The doc type is driven by the selected proposal's voting contract
-      // upstream (voting-flow.tsx → isPassportFlow prop).
-      const scanPromise = scanDocument(isPassportFlow ? 'P' : 'I', {
-        documentNumber: mrzData.documentNumber,
-        dateOfBirth: mrzData.birthDate,
-        dateOfExpiry: mrzData.expiryDate,
-      }, challenge);
+      // 'I' = TD1 ID card → PACE polling on Type A, the protocol French
+      // CNIes use. 'P' = TD3 passport → Type B + BAC. The doc type is
+      // driven by the selected proposal's voting contract upstream
+      // (voting-flow.tsx → isPassportFlow prop). The key material is
+      // whichever Step 5 mode produced it: CAN → PACE, MRZ → BAC.
+      const scanPromise = scanDocument(
+        isPassportFlow ? 'P' : 'I',
+        useCan
+          ? { can: canData!.can }
+          : {
+              documentNumber: mrzData!.documentNumber,
+              dateOfBirth: mrzData!.birthDate,
+              dateOfExpiry: mrzData!.expiryDate,
+            },
+        challenge,
+      );
 
       // Clear the timeout as soon as the scan settles (success or error) so the
       // two outcomes can never be shown simultaneously.
@@ -306,8 +319,11 @@ const Step6: React.FC<Step6Props> = ({ containerWidth, mrzData, onAnalyze, onNFC
       console.error('[Step6] Error details:', errorDetails);
       setDebugError(`${error.name || 'Error'}: ${error.message || 'unknown'}\n\nCode: ${error.code || 'none'}\n\nInfo: ${JSON.stringify(error.userInfo || error.nativeError || {})}\n\nStack: ${error.stack?.substring(0, 200) || 'none'}`);
 
+      // The native module reports a bad key of either kind under the legacy
+      // `InvalidMRZKey` name — name whichever one the user actually entered
+      // before routing them back to Step 5 to correct it.
       if (error.message === 'InvalidMRZKey' || error.code === 'InvalidMRZKey') {
-        setScanStatus(t('voting.step6InvalidMrz'));
+        setScanStatus(t(useCan ? 'voting.step6InvalidCan' : 'voting.step6InvalidMrz'));
         setIsScanning(false);
         if (onGoBack) { setTimeout(() => { onGoBack(); }, 1500); }
         return;
