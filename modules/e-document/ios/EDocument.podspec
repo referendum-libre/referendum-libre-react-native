@@ -24,5 +24,4 @@ Pod::Spec.new do |s|
   s.xcconfig = { 'OTHER_LDFLAGS' => '-weak_framework CryptoKit -weak_framework CoreNFC -weak_framework CryptoTokenKit' }
 
   s.source_files = "**/*.{h,m,mm,swift,hpp,cpp}"
-  s.resources = "NFCPassportReader/Resources/**/*"
 end

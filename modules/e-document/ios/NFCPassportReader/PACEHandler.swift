@@ -40,7 +40,7 @@ public class PACEHandler {
     
     
     private static let MRZ_PACE_KEY_REFERENCE : UInt8 = 0x01
-    private static let CAN_PACE_KEY_REFERENCE : UInt8 = 0x02 // Not currently supported
+    private static let CAN_PACE_KEY_REFERENCE : UInt8 = 0x02
     private static let PIN_PACE_KEY_REFERENCE : UInt8 = 0x03 // Not currently supported
     private static let CUK_PACE_KEY_REFERENCE : UInt8 = 0x04 // Not currently supported
 
@@ -109,7 +109,7 @@ public class PACEHandler {
         if let can = can, !can.isEmpty {
             Logger.pace.info( "Using CAN for PACE authentication" )
             paceKeyType = PACEHandler.CAN_PACE_KEY_REFERENCE
-            paceKey = try createPaceKey( from: can )
+            paceKey = try createPaceKey( fromCAN: can )
         } else {
             paceKeyType = PACEHandler.MRZ_PACE_KEY_REFERENCE
             paceKey = try createPaceKey( from: mrzKey )
@@ -124,8 +124,7 @@ public class PACEHandler {
         Logger.pace.debug("cipherAlg - \(self.cipherAlg)" )
         Logger.pace.debug("digestAlg - \(self.digestAlg)" )
         Logger.pace.debug("keyLength - \(self.keyLength)" )
-        Logger.pace.debug("keyLength - \(mrzKey)" )
-        Logger.pace.debug("paceKey - \(binToHexRep(self.paceKey, asArray:true))" )
+        // Never log the password (mrzKey/CAN) or the derived paceKey — PII / secret material.
 
         // First start the initial auth call
         _ = try await tagReader.sendMSESetATMutualAuth(oid: paceOID, keyType: paceKeyType)
@@ -163,7 +162,7 @@ public class PACEHandler {
 */
     }
     
-    /// Performs PACE Step 1- receives an encrypted nonce from the passport and decypts it with the  PACE key - derived from MRZ, CAN (not yet supported)
+    /// Performs PACE Step 1- receives an encrypted nonce from the passport and decypts it with the  PACE key - derived from MRZ or CAN
     func doStep1() async throws -> [UInt8] {
         Logger.pace.debug("Doing PACE Step1...")
         let response = try await tagReader.sendGeneralAuthenticate(data: [], isLast: false)
@@ -629,9 +628,22 @@ extension PACEHandler {
     func createPaceKey( from mrzKey: String ) throws -> [UInt8] {
         let buf: [UInt8] = Array(mrzKey.utf8)
         let hash = calcSHA1Hash(buf)
-        
+
         let smskg = SecureMessagingSessionKeyGenerator()
         let key = try smskg.deriveKey(keySeed: hash, cipherAlgName: cipherAlg, keyLength: keyLength, nonce: nil, mode: .PACE_MODE, paceKeyReference: paceKeyType)
+        return key
+    }
+
+    /// Computes the PACE key from a CAN (Card Access Number)
+    /// ICAO 9303-11 §9.7.3: unlike the MRZ password, the CAN key seed is the
+    /// CAN's encoded bytes used directly — it is NOT SHA-1 hashed first.
+    /// - Parameter can: the card access number (printed on the document)
+    /// - Returns an encoded key based on the CAN that can be used for PACE
+    func createPaceKey( fromCAN can: String ) throws -> [UInt8] {
+        let keySeed: [UInt8] = Array(can.utf8)
+
+        let smskg = SecureMessagingSessionKeyGenerator()
+        let key = try smskg.deriveKey(keySeed: keySeed, cipherAlgName: cipherAlg, keyLength: keyLength, nonce: nil, mode: .PACE_MODE, paceKeyReference: paceKeyType)
         return key
     }
     

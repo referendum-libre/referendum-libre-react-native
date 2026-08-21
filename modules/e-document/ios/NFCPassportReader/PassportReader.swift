@@ -240,6 +240,15 @@ extension PassportReader {
                 Logger.passportReader.debug( "PACE Succeeded" )
             } catch {
                 passport.PACEStatus = .failed
+
+                // When unlocking with a CAN there is no BAC fallback — CAN-only
+                // cards (e.g. French CNIe) don't support BAC, and we may not even
+                // have a real MRZ key. Surface the PACE failure directly instead
+                // of a misleading BAC/InvalidMRZKey error.
+                if let can = self.canKey, !can.isEmpty {
+                    Logger.passportReader.error( "PACE with CAN failed - no BAC fallback possible" )
+                    throw error
+                }
                 Logger.passportReader.error( "PACE Failed - falling back to BAC" )
             }
             
