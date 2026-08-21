@@ -17,6 +17,10 @@ on:
     - cron: '0 3 * * 1'   # 03:00 UTC every Monday
   workflow_dispatch:       # manual run from the UI
     inputs:
+      branch:
+        description: 'Branch to build (e.g. feat/my-branch)'
+        default: 'develop'
+        type: string
       variant:
         description: 'Gradle build variant'
         default: 'Debug'
@@ -30,7 +34,7 @@ on:
 permissions: read-all
 
 concurrency:
-  group: android-weekly-${{ github.ref }}
+  group: android-weekly-${{ github.event.inputs.branch || github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -40,10 +44,10 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      - name: Checkout develop
+      - name: Checkout
         uses: actions/checkout@v5
         with:
-          ref: develop
+          ref: ${{ github.event.inputs.branch || 'develop' }}
 
       - name: Setup Node 20
         uses: actions/setup-node@v5
