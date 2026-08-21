@@ -37,6 +37,7 @@ import Step11 from '@/components/voting-modal/Step11';
 import Step12Success from '@/components/voting-modal/Step12Success';
 import Step12Error from '@/components/voting-modal/Step12Error';
 import ManualMRZInput from '@/components/voting-modal/ManualMRZInput';
+import Step5Can from '@/components/voting-modal/Step5Can';
 import { createModalStyles } from '@/components/voting-modal/styles';
 import { useModalVideoPlayers } from '@/hooks/useModalVideoPlayers';
 import { markVoteJustCast } from '@/utils/post-vote-refresh';
@@ -57,6 +58,12 @@ export default function VotingFlowScreen() {
   const [verificationError, setVerificationError] = useState<unknown>(null);
   const [voteSubmissionResult, setVoteSubmissionResult] = useState<'success' | 'error' | null>(null);
   const [mrzData, setMRZData] = useState<{ documentNumber: string; birthDate: string; expiryDate: string } | null>(null);
+  const [canData, setCanData] = useState<{ can: string } | null>(null);
+  // Which credential Step 5 collects. 'can' (default) shows the 6-digit CAN
+  // form — fastest path on French CNIes, which authenticate over PACE. 'mrz'
+  // falls back to the camera MRZ scan (BAC) for documents without a printed
+  // CAN, and is reachable from the CAN screen's "scan the MRZ instead" link.
+  const [step5Mode, setStep5Mode] = useState<'can' | 'mrz'>('can');
   const [nfcData, setNFCData] = useState<PassportData | null>(null);
   // Flips true ONLY after `handleNFCSuccess`'s async block has resolved the
   // per-passport BJJ key and synced it into the legacy SecureStore slot.
@@ -242,6 +249,8 @@ export default function VotingFlowScreen() {
       setVoteSubmissionResult(null);
       setVoteTxId(null);
       setMRZData(null);
+      setCanData(null);
+      setStep5Mode('can');
       setNFCData(null);
       // Critical: clear the manual-input modal flag too. If the user backed
       // out of the flow while the modal was open, this would otherwise stay
@@ -313,7 +322,16 @@ export default function VotingFlowScreen() {
   }, [currentStep, slideAnim, containerWidth, handleStepChange, progressOpacity1, progressOpacity2, progressOpacity3]);
 
   const handleMRZScanned = useCallback((data: { documentNumber: string; birthDate: string; expiryDate: string }) => {
+    // Clear any CAN from a previous attempt — Step 6 prefers CAN when both
+    // are set, and a stale one would silently override the fresh MRZ.
+    setCanData(null);
     setMRZData(data);
+    handleNext();
+  }, [handleNext]);
+
+  const handleCanEntered = useCallback((data: { can: string }) => {
+    setMRZData(null);
+    setCanData(data);
     handleNext();
   }, [handleNext]);
 
@@ -399,9 +417,12 @@ export default function VotingFlowScreen() {
     handleNext();
   }, [handleNext]);
 
-  const handleGoBackToMRZScan = useCallback(() => {
-    console.log('[flow] step → 5 (back-to-mrz)');
+  const handleGoBackToCanInput = useCallback(() => {
+    console.log('[flow] step → 5 (back-to-can)');
     setCurrentStep(5);
+    // Drop both credentials — whichever one Step 5 collected failed to open
+    // the chip, so the user re-enters from scratch.
+    setCanData(null);
     setMRZData(null);
     Animated.timing(slideAnim, {
       toValue: -4 * containerWidth,
@@ -669,28 +690,41 @@ export default function VotingFlowScreen() {
                 show(2) ? <Step3 key="s3" containerWidth={containerWidth} slideAreaHeight={slideAreaHeight} /> : spacer('s3'),
                 show(3) ? <Step4 key="s4" introPlayer={playerIntro} containerWidth={containerWidth} onStartAnalysis={handleNext} isPassportFlow={isPassportFlow} /> : spacer('s4'),
                 show(4) ? (
-                  <Step5
-                    key="s5"
-                    containerWidth={containerWidth}
-                    // Kill the camera while the manual-entry modal is open so
-                    // the preview doesn't sit on top of the keyboard.
-                    isActive={currentStep === 5 && !isManualInputVisible}
-                    onMRZScanned={handleMRZScanned}
-                    onManualFill={handleManualFill}
-                    isPassportFlow={isPassportFlow}
-                    // Gate MRZ-extracted nationality against the proposal's
-                    // citizenship whitelist (empty / undefined → open to
-                    // all countries).
-                    allowedCitizenships={proposalInfo?.criteria.citizenshipWhitelist}
-                  />
+                  step5Mode === 'can' ? (
+                    <Step5Can
+                      key="s5"
+                      containerWidth={containerWidth}
+                      slideAreaHeight={slideAreaHeight}
+                      isActive={currentStep === 5}
+                      onCanEntered={handleCanEntered}
+                      onUseMrzInstead={() => setStep5Mode('mrz')}
+                      isPassportFlow={isPassportFlow}
+                    />
+                  ) : (
+                    <Step5
+                      key="s5"
+                      containerWidth={containerWidth}
+                      // Kill the camera while the manual-entry modal is open so
+                      // the preview doesn't sit on top of the keyboard.
+                      isActive={currentStep === 5 && !isManualInputVisible}
+                      onMRZScanned={handleMRZScanned}
+                      onManualFill={handleManualFill}
+                      isPassportFlow={isPassportFlow}
+                      // Gate MRZ-extracted nationality against the proposal's
+                      // citizenship whitelist (empty / undefined → open to
+                      // all countries).
+                      allowedCitizenships={proposalInfo?.criteria.citizenshipWhitelist}
+                    />
+                  )
                 ) : spacer('s5'),
                 show(5) ? (
                   <Step6
                     key="s6"
                     containerWidth={containerWidth}
                     mrzData={mrzData}
+                    canData={canData}
                     onNFCSuccess={handleNFCSuccess}
-                    onGoBack={handleGoBackToMRZScan}
+                    onGoBack={handleGoBackToCanInput}
                     isPassportFlow={isPassportFlow}
                   />
                 ) : spacer('s6'),
