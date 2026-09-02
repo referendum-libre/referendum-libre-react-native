@@ -66,6 +66,16 @@ const Step5: React.FC<Step5Props> = ({ containerWidth, isActive, onMRZScanned, o
   // broken and nudge the user toward manual entry.
   const [ocrUnavailable, setOcrUnavailable] = useState(false);
 
+  // Ask for the camera only once this step is actually shown. Step 4 used to
+  // request it up-front, but Step 5 now defaults to typing the CAN, so voters
+  // who never open the MRZ scanner should never see the prompt.
+  useEffect(() => {
+    if (isActive && !hasPermission) {
+      console.log('📸 Step5: Requesting camera permission...');
+      requestPermission().then((granted) => console.log('📸 Step5: Permission result:', granted));
+    }
+  }, [isActive, hasPermission, requestPermission]);
+
   // Reset when step becomes active
   useEffect(() => {
     if (isActive) {

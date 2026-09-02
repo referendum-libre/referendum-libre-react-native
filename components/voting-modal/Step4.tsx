@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, LayoutChangeEvent, Platform, Image } from 'react-native';
 import { VideoView } from 'expo-video';
-import { useCameraPermission } from 'react-native-vision-camera';
 import { createModalStyles, createStepSpecificStyles } from './styles';
 import { useColors } from '@/constants/theme';
 import { useTranslation } from 'react-i18next';
@@ -22,31 +21,17 @@ const Step4: React.FC<Step4Props> = ({ introPlayer, containerWidth, onStartAnaly
   const colors = useColors();
   const modalStyles = createModalStyles(colors);
   const stepSpecificStyles = createStepSpecificStyles(colors);
-  const { hasPermission, requestPermission } = useCameraPermission();
 
   // Intro phase. Voters who've gone through the flow before can tap "Passer"
   // to skip straight to the analysis CTA. Plays on both platforms — the
   // Android branch uses a re-muxed MP4 (see useModalVideoPlayers).
   const [showIntro, setShowIntro] = useState(true);
 
-  const handleStartAnalysis = async () => {
-    console.log('🔘 Step4: Start analysis pressed, hasPermission:', hasPermission);
-
-    // Request camera permission before proceeding
-    if (!hasPermission) {
-      console.log('📸 Step4: Requesting camera permission...');
-      const granted = await requestPermission();
-      console.log('📸 Step4: Permission result:', granted);
-
-      if (!granted) {
-        // Permission denied - stay on this step
-        console.log('❌ Step4: Camera permission denied');
-        return;
-      }
-    }
-
-    // Permission granted or already had it - proceed to next step
-    console.log('✅ Step4: Permission OK, proceeding to Step 5');
+  // No camera permission request here any more: Step 5 now defaults to typing
+  // the 6-digit CAN, which needs no camera at all. The prompt is deferred to
+  // Step5's MRZ fallback, so voters who never open the scanner are never asked.
+  const handleStartAnalysis = () => {
+    console.log('🔘 Step4: Start analysis pressed, proceeding to Step 5');
     onStartAnalysis?.();
   };
 
